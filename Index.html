@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#f6c7f3">
+<title>Regenbogen-Einhorn</title>
+<style>
+:root{--pink:#ffb8df;--purple:#bca5ff;--ink:#593d78;--cream:#fff9ff}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:ui-rounded,"Trebuchet MS",system-ui,sans-serif;color:var(--ink)}
+body{background:linear-gradient(160deg,#ffd7ef 0%,#e6d9ff 48%,#c8f4ff 100%);padding:env(safe-area-inset-top) 12px env(safe-area-inset-bottom);overflow-x:hidden}
+.app{max-width:520px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column;gap:12px;padding:12px 0 18px}
+header{text-align:center;padding:5px 4px 0}
+h1{font-size:clamp(1.65rem,7vw,2.35rem);margin:0;color:#8a4db3;text-shadow:0 2px #fff}
+.subtitle{margin:3px 0 0;font-size:.94rem}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.stat,.panel{background:#ffffffd9;border:2px solid #fff;border-radius:20px;box-shadow:0 5px 0 #c7a8e8a6;padding:11px}
+.statline{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:.92rem}
+.track{height:13px;background:#f0e3fa;border-radius:99px;margin-top:7px;overflow:hidden;border:1px solid #fff}
+.fill{height:100%;width:70%;border-radius:99px;transition:width .35s ease;background:linear-gradient(90deg,#ff91c8,#b98aff,#78d9ff)}
+.score{font-size:1.15rem;font-weight:900;color:#9a56c8}
+.scene{position:relative;overflow:hidden;min-height:270px;border-radius:26px;border:3px solid #fff;background:linear-gradient(#c9f3ff,#e9e1ff 65%,#d4ffd9);box-shadow:0 7px 0 #b99bdc;display:flex;align-items:center;justify-content:center}
+.cloud{position:absolute;font-size:2.2rem;opacity:.8;animation:float 4s ease-in-out infinite}
+.c1{top:13px;left:15px}.c2{top:38px;right:18px;animation-delay:-2s}
+.star{position:absolute;color:#fff36c;font-size:1.3rem;animation:twinkle 1.5s infinite alternate}
+.s1{top:75px;left:18%}.s2{top:32%;right:13%}.s3{bottom:24%;left:12%}.s4{bottom:17%;right:20%}
+.ground{position:absolute;bottom:-35px;width:125%;height:90px;background:#b9f3c8;border-radius:50%}
+.unicorn-wrap{position:relative;z-index:2;transform:translateY(8px);transition:transform .25s}
+.unicorn{font-size:clamp(7.5rem,36vw,11rem);filter:drop-shadow(0 8px 2px #8f6eb044);line-height:1}
+.mane-label{position:absolute;left:4%;right:4%;top:68%;text-align:center;font-size:1.15rem;letter-spacing:2px;pointer-events:none}
+.accessory{position:absolute;top:-8px;right:-10px;font-size:2.4rem;transform:rotate(12deg)}
+.action-pop{position:absolute;z-index:5;font-size:2.4rem;animation:pop .8s ease-out forwards;pointer-events:none}
+.message{min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:800;font-size:1rem;color:#8845a9;padding:10px;background:#fff8ffdd;border-radius:16px;border:2px dashed #d8a7ef}
+h2{font-size:1.05rem;margin:0 0 9px}
+.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+button{font:inherit;font-weight:800;border:0;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.action{min-height:76px;border-radius:18px;background:linear-gradient(150deg,#fff,#ffe5f5);box-shadow:0 4px 0 #dda9d7;color:#70418f;padding:9px 4px;font-size:.92rem}
+.action:active,.choice:active{transform:translateY(3px);box-shadow:0 1px 0 #dda9d7}
+.action span{display:block;font-size:1.8rem;margin-bottom:2px}
+.customize{display:grid;gap:12px}
+.choices{display:flex;gap:9px;flex-wrap:wrap}
+.choice{min-width:48px;min-height:47px;padding:7px 11px;border-radius:15px;background:#f8edff;border:2px solid #fff;box-shadow:0 3px 0 #d5b6e8;color:#70418f;font-size:1.05rem}
+.swatch{width:43px;height:43px;min-width:43px;border-radius:50%;padding:0;border:3px solid white;box-shadow:0 2px 0 #c5a6dc}
+.swatch[aria-pressed="true"],.choice[aria-pressed="true"]{outline:3px solid #9955c9;outline-offset:2px}
+footer{text-align:center;font-size:.78rem;opacity:.75;padding:2px}
+@keyframes float{50%{transform:translateY(-8px)}}@keyframes twinkle{to{opacity:.35;transform:scale(.7) rotate(25deg)}}@keyframes pop{0%{opacity:0;transform:translateY(15px) scale(.5)}25%{opacity:1;transform:translateY(-8px) scale(1.15)}100%{opacity:0;transform:translateY(-70px) scale(.8)}}
+@media(min-height:850px){.scene{min-height:310px}.app{gap:14px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="app">
+<header><h1>🌈 Regenbogen-Einhorn</h1><p class="subtitle">Kümmere dich um dein magisches Pony! ✨</p></header>
+<section class="stats" aria-label="Spielstand">
+ <div class="stat"><div class="statline"><span>💖 Glück</span><span id="happyText">70 %</span></div><div class="track"><div id="happyBar" class="fill"></div></div></div>
+ <div class="stat"><div class="statline"><span>⭐ Punkte</span><span id="score" class="score">0</span></div><div class="track"><div id="energyBar" class="fill" style="width:70%;background:linear-gradient(90deg,#9de8ff,#a5a0ff)"></div></div></div>
+</section>
+<section class="scene" id="scene" aria-label="Dein Einhorn">
+ <div class="cloud c1">☁️</div><div class="cloud c2">☁️</div>
+ <div class="star s1">✦</div><div class="star s2">✧</div><div class="star s3">✦</div><div class="star s4">✧</div>
+ <div class="ground"></div>
+ <div class="unicorn-wrap" id="unicornWrap"><div class="unicorn" id="unicorn" role="img" aria-label="Niedliches Einhorn">🦄</div><div class="mane-label" id="maneLabel">🌸🌈💜</div><div class="accessory" id="accessory"></div></div>
+</section>
+<div class="message" id="message" role="status" aria-live="polite">Hallo, Sternchen! Was machen wir zuerst? 💕</div>
+<section class="panel"><h2>🧺 Pflege dein Einhorn</h2><div class="actions">
+ <button class="action" data-action="apple"><span>🍎</span>Apfel füttern</button>
+ <button class="action" data-action="carrot"><span>🥕</span>Karotte füttern</button>
+ <button class="action" data-action="brush"><span>🪮</span>Bürsten</button>
+</div></section>
+<section class="panel customize">
+ <div><h2>🎨 Mähnenfarbe</h2><div class="choices" id="colors">
+ <button class="swatch" style="background:linear-gradient(135deg,#ff82c8,#ffc9e8)" data-color="🌸💗🎀" aria-label="Rosa" aria-pressed="true"></button>
+ <button class="swatch" style="background:linear-gradient(135deg,#ad75ff,#e2b7ff)" data-color="💜🔮🦄" aria-label="Lila" aria-pressed="false"></button>
+ <button class="swatch" style="background:linear-gradient(135deg,#62dcff,#a2ffeb)" data-color="🩵🌊🫧" aria-label="Blau" aria-pressed="false"></button>
+ <button class="swatch" style="background:linear-gradient(135deg,#ffdc62,#ff9e9e)" data-color="🌞🍑✨" aria-label="Sonnengelb" aria-pressed="false"></button>
+ <button class="swatch" style="background:linear-gradient(135deg,#ff8e76,#9af0a2,#a6a2ff)" data-color="🌈⭐💖" aria-label="Regenbogen" aria-pressed="false"></button>
+ </div></div>
+ <div><h2>👑 Accessoires</h2><div class="choices" id="accessories">
+ <button class="choice" data-accessory="" aria-pressed="true">Keins</button><button class="choice" data-accessory="👑" aria-pressed="false">👑 Krone</button><button class="choice" data-accessory="🎀" aria-pressed="false">🎀 Schleife</button><button class="choice" data-accessory="🌼" aria-pressed="false">🌼 Blume</button><button class="choice" data-accessory="🕶️" aria-pressed="false">🕶️ Cool</button>
+ </div></div>
+</section>
+<button class="action" id="reset" style="min-height:48px">🔄 Neu anfangen</button>
+<footer>Dein Spielstand wird auf diesem Gerät gespeichert, wenn der Browser das erlaubt. 💖</footer>
+</main>
+<script>
+(() => {
+ const KEY='regenbogen-einhorn-v1';
+ const defaults={happiness:70,score:0,mane:'🌸💗🎀',accessory:'',brushes:0};
+ let state={...defaults};
+ const $=id=>document.getElementById(id);
+ function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+ function load(){try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&typeof s==='object')state={...defaults,...s}}catch(e){}}
+ function render(){
+  $('happyText').textContent=state.happiness+' %';$('happyBar').style.width=state.happiness+'%';
+  $('score').textContent=state.score;$('energyBar').style.width=Math.min(100,Math.max(0,state.score%101))+'%';
+  $('maneLabel').textContent=state.mane;$('accessory').textContent=state.accessory;
+  document.querySelectorAll('[data-color]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.color===state.mane)));
+  document.querySelectorAll('[data-accessory]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.accessory===state.accessory)));
+ }
+ function celebrate(emoji){const el=document.createElement('div');el.className='action-pop';el.textContent=emoji;el.style.left=(25+Math.random()*45)+'%';el.style.top='35%';$('scene').appendChild(el);setTimeout(()=>el.remove(),850);$('unicornWrap').animate([{transform:'translateY(8px) rotate(0)'},{transform:'translateY(-10px) rotate(-5deg)'},{transform:'translateY(8px) rotate(5deg)'},{transform:'translateY(8px) rotate(0)'}],{duration:550});}
+ function act(type){
+  let msg='',emoji='✨',gain=10;
+  if(type==='apple'){state.happiness=Math.min(100,state.happiness+12);state.score+=10;msg='Knackiger Apfel! Mmmh, lecker! 🍎';emoji='🍎💖';}
+  else if(type==='carrot'){state.happiness=Math.min(100,state.happiness+10);state.score+=10;msg='Knusper-knusper! Die Karotte schmeckt toll! 🥕';emoji='🥕✨';}
+  else if(type==='brush'){state.happiness=Math.min(100,state.happiness+15);state.score+=15;state.brushes++;msg='So schön glänzend! Deine Bürste zaubert Glitzer ins Fell! 🪮';emoji='✨🩷';}
+  $('message').textContent=msg;render();save();celebrate(emoji);
+ }
+ document.querySelectorAll('[data-action]').forEach(b=>b.addEventListener('click',()=>act(b.dataset.action)));
+ document.querySelectorAll('[data-color]').forEach(b=>b.addEventListener('click',()=>{state.mane=b.dataset.color;state.score+=2;$('message').textContent='Wow! Diese Mähnenfarbe steht dir zauberhaft! 🌈';render();save();celebrate('🌈✨')}));
+ document.querySelectorAll('[data-accessory]').forEach(b=>b.addEventListener('click',()=>{state.accessory=b.dataset.accessory;state.score+=2;$('message').textContent=state.accessory?'Ein magischer neuer Look! Du siehst bezaubernd aus! 💖':'Ganz natürlich und wunderschön! ✨';render();save();celebrate(state.accessory||'✨')}));
+ $('reset').addEventListener('click',()=>{state={...defaults};$('message').textContent='Ein frischer Zauber! Dein Abenteuer beginnt von vorn! 🌟';render();save();celebrate('🌟')});
+ load();render();
+})();
+</script>
+</body></html>
