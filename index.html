@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#f6c7f3">
+<title>Regenbogen-Einhorn</title>
+<style>
+:root{--pink:#ffb8df;--purple:#bca5ff;--ink:#593d78;--cream:#fff9ff}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:ui-rounded,"Trebuchet MS",system-ui,sans-serif;color:var(--ink)}
+body{background:linear-gradient(160deg,#ffd7ef 0%,#e6d9ff 48%,#c8f4ff 100%);padding:env(safe-area-inset-top) 12px env(safe-area-inset-bottom);overflow-x:hidden}
+.app{max-width:520px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column;gap:12px;padding:12px 0 18px}
+header{text-align:center;padding:5px 4px 0}
+h1{font-size:clamp(1.65rem,7vw,2.35rem);margin:0;color:#8a4db3;text-shadow:0 2px #fff}
+.subtitle{margin:3px 0 0;font-size:.94rem}
+.name-row{display:flex;gap:8px}.name-row input{flex:1;min-width:0;font:inherit;font-size:1rem;padding:11px 12px;border-radius:14px;border:2px solid #e3c9f4;background:#fffaff;color:var(--ink)}.name-save{padding:10px 14px;border-radius:14px;background:#d8b9ff;color:#573679;box-shadow:0 3px 0 #b391df}.name-save:active{transform:translateY(2px)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.stat,.panel{background:#ffffffd9;border:2px solid #fff;border-radius:20px;box-shadow:0 5px 0 #c7a8e8a6;padding:11px}
+.statline{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:.92rem}
+.track{height:13px;background:#f0e3fa;border-radius:99px;margin-top:7px;overflow:hidden;border:1px solid #fff}
+.fill{height:100%;width:70%;border-radius:99px;transition:width .35s ease;background:linear-gradient(90deg,#ff91c8,#b98aff,#78d9ff)}
+.score{font-size:1.15rem;font-weight:900;color:#9a56c8}
+.scene{position:relative;overflow:hidden;min-height:270px;border-radius:26px;border:3px solid #fff;background:linear-gradient(#c9f3ff,#e9e1ff 65%,#d4ffd9);box-shadow:0 7px 0 #b99bdc;display:flex;align-items:center;justify-content:center}
+.cloud{position:absolute;font-size:2.2rem;opacity:.8;animation:float 4s ease-in-out infinite}
+.c1{top:13px;left:15px}.c2{top:38px;right:18px;animation-delay:-2s}
+.star{position:absolute;color:#fff36c;font-size:1.3rem;animation:twinkle 1.5s infinite alternate}
+.s1{top:75px;left:18%}.s2{top:32%;right:13%}.s3{bottom:24%;left:12%}.s4{bottom:17%;right:20%}
+.ground{position:absolute;bottom:-35px;width:125%;height:90px;background:#b9f3c8;border-radius:50%}
+.unicorn-wrap{position:relative;z-index:2;transform:translateY(8px);transition:transform .25s}
+.unicorn{font-size:clamp(7.5rem,36vw,11rem);filter:drop-shadow(0 8px 2px #8f6eb044);line-height:1}
+.mane-label{position:absolute;left:4%;right:4%;top:68%;text-align:center;font-size:1.15rem;letter-spacing:2px;pointer-events:none}
+.accessory{position:absolute;top:-8px;right:-10px;font-size:2.4rem;transform:rotate(12deg)}
+.unicorn-svg{display:block;width:min(84vw,330px);height:auto;overflow:visible;filter:drop-shadow(0 8px 2px #8f6eb044)}.mane-shape{fill:var(--mane,#ff8bc7);transition:fill .3s}.accessory{position:absolute;z-index:4;left:69%;top:17%;transform:translate(-50%,-50%);font-size:2.4rem;filter:drop-shadow(0 2px 1px #79519a55);pointer-events:none;white-space:nowrap}.accessory.glasses{top:42%;left:69%;font-size:2.4rem;transform:translate(-50%,-50%) rotate(-5deg)}.accessory.crown{top:3%;left:70%;font-size:2.5rem}.accessory.bow{top:20%;left:78%;font-size:2.2rem}.accessory.flower{top:27%;left:78%;font-size:2.1rem}.foods{display:flex;gap:10px;flex-wrap:wrap}.food{display:flex;align-items:center;gap:7px;background:#fff0c9;border:2px solid white;border-radius:16px;padding:9px 13px;box-shadow:0 4px 0 #e4c18a;color:#784e30;font-weight:800;user-select:none;-webkit-user-select:none;touch-action:none;cursor:grab}.food .emoji{font-size:1.7rem}.food.dragging{opacity:.55}.hint{font-size:.83rem;margin:0 0 9px;color:#805b94}.scene.drop-target{outline:4px dashed #ff8acb;outline-offset:-8px}.action-pop{position:absolute;z-index:5;font-size:2.4rem;animation:pop .8s ease-out forwards;pointer-events:none}
+.message{min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:800;font-size:1rem;color:#8845a9;padding:10px;background:#fff8ffdd;border-radius:16px;border:2px dashed #d8a7ef}
+h2{font-size:1.05rem;margin:0 0 9px}
+.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+button{font:inherit;font-weight:800;border:0;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.action{min-height:76px;border-radius:18px;background:linear-gradient(150deg,#fff,#ffe5f5);box-shadow:0 4px 0 #dda9d7;color:#70418f;padding:9px 4px;font-size:.92rem}
+.action:active,.choice:active{transform:translateY(3px);box-shadow:0 1px 0 #dda9d7}
+.action span{display:block;font-size:1.8rem;margin-bottom:2px}
+.customize{display:grid;gap:12px}
+.choices{display:flex;gap:9px;flex-wrap:wrap}
+.choice{min-width:48px;min-height:47px;padding:7px 11px;border-radius:15px;background:#f8edff;border:2px solid #fff;box-shadow:0 3px 0 #d5b6e8;color:#70418f;font-size:1.05rem}
+.swatch{width:43px;height:43px;min-width:43px;border-radius:50%;padding:0;border:3px solid white;box-shadow:0 2px 0 #c5a6dc}
+.swatch[aria-pressed="true"],.choice[aria-pressed="true"]{outline:3px solid #9955c9;outline-offset:2px}
+footer{text-align:center;font-size:.78rem;opacity:.75;padding:2px}
+@keyframes float{50%{transform:translateY(-8px)}}@keyframes twinkle{to{opacity:.35;transform:scale(.7) rotate(25deg)}}@keyframes pop{0%{opacity:0;transform:translateY(15px) scale(.5)}25%{opacity:1;transform:translateY(-8px) scale(1.15)}100%{opacity:0;transform:translateY(-70px) scale(.8)}}
+@media(min-height:850px){.scene{min-height:310px}.app{gap:14px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="app">
+<header><h1>🌈 Regenbogen-Einhorn</h1><p class="subtitle">Kümmere dich um dein magisches Pony! ✨</p></header>
+<section class="stats" aria-label="Spielstand">
+ <div class="stat"><div class="statline"><span>💖 Glück</span><span id="happyText">70 %</span></div><div class="track"><div id="happyBar" class="fill"></div></div></div>
+ <div class="stat"><div class="statline"><span>⭐ Punkte</span><span id="score" class="score">0</span></div><div class="track"><div id="energyBar" class="fill" style="width:70%;background:linear-gradient(90deg,#9de8ff,#a5a0ff)"></div></div></div>
+</section>
+<section class="panel name-panel"><h2>💖 Wie heißt dein Einhorn?</h2><div class="name-row"><input id="petNameInput" type="text" maxlength="18" placeholder="Zum Beispiel Sternchen" aria-label="Name deines Einhorns"><button class="name-save" id="saveName" type="button">Speichern</button></div><p class="hint" style="margin:8px 0 0">Der Name wird auf diesem Gerät gespeichert. ✨</p></section>
+<section class="scene" id="scene" aria-label="Dein Einhorn">
+ <div class="cloud c1">☁️</div><div class="cloud c2">☁️</div>
+ <div class="star s1">✦</div><div class="star s2">✧</div><div class="star s3">✦</div><div class="star s4">✧</div>
+ <div class="ground"></div>
+ <div class="unicorn-wrap" id="unicornWrap"><svg class="unicorn-svg" viewBox="0 0 320 270" role="img" aria-label="Niedliches Einhorn mit bunter Mähne">
+<defs><linearGradient id="rainbowMane"><stop stop-color="#ff8e76"/><stop offset=".35" stop-color="#9af0a2"/><stop offset=".7" stop-color="#a6a2ff"/><stop offset="1" stop-color="#ff8bc7"/></linearGradient><linearGradient id="horn" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff49b"/><stop offset=".5" stop-color="#ffb9e7"/><stop offset="1" stop-color="#b99aff"/></linearGradient><linearGradient id="body" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#f3eaff"/></linearGradient></defs>
+<ellipse cx="153" cy="204" rx="83" ry="43" fill="url(#body)" stroke="#d8c6ef" stroke-width="3"/><path d="M180 203 Q171 165 183 124 Q191 97 216 87 L248 109 Q226 135 229 179 L231 213Z" fill="url(#body)" stroke="#d8c6ef" stroke-width="3"/>
+<path class="mane-shape" d="M188 139 Q147 115 164 77 Q173 55 191 67 Q180 37 203 28 Q226 22 234 49 Q253 28 269 48 Q285 68 262 89 Q286 102 270 124 Q256 141 232 131 L221 170Z" stroke="#d86cae" stroke-opacity=".35" stroke-width="2"/>
+<path d="M189 79 Q204 57 231 68 Q253 75 258 105 Q263 135 242 155 Q223 173 203 151 Q184 132 189 105Z" fill="url(#body)" stroke="#d8c6ef" stroke-width="3"/><path d="M203 78 L197 43 Q214 48 224 73Z" fill="#fff" stroke="#d8c6ef" stroke-width="3"/><path d="M205 66 L203 53 L215 70Z" fill="#ffb3d9"/><path d="M226 76 L237 25 L253 77Z" fill="url(#horn)" stroke="#d5a5e8" stroke-width="2"/>
+<ellipse cx="239" cy="135" rx="22" ry="15" fill="#fff0f8" stroke="#ead5f0" stroke-width="2"/><ellipse cx="220" cy="111" rx="5.5" ry="8" fill="#593d78"/><circle cx="222" cy="108" r="2" fill="#fff"/><ellipse cx="207" cy="130" rx="10" ry="6" fill="#ffb7d7" opacity=".8"/><path d="M238 140 Q246 146 252 139" fill="none" stroke="#a96c99" stroke-width="2.5" stroke-linecap="round"/>
+<path class="mane-shape" d="M78 193 Q51 178 46 196 Q43 211 63 211 Q44 227 59 239 Q79 242 85 220 Q104 217 98 201Z"/><path d="M60 196 Q75 202 65 220 M77 202 Q88 211 72 231" fill="none" stroke="#fff" stroke-width="4" opacity=".6" stroke-linecap="round"/><path d="M88 219 L89 249 Q91 257 104 256 L118 252 L119 218Z M174 221 L176 250 Q183 258 196 252 L202 247 L198 215Z" fill="#fff" stroke="#d8c6ef" stroke-width="3"/><path d="M88 245 L118 245 L117 255 Q102 262 89 255Z M176 245 L201 244 L202 255 Q188 262 177 255Z" fill="#bda0e9" stroke="#a98acb" stroke-width="2"/>
+</svg><div class="accessory" id="accessory"></div></div>
+</section>
+<div class="message" id="message" role="status" aria-live="polite">Hallo, Sternchen! Was machen wir zuerst? 💕</div>
+<section class="panel"><h2>🍎 Futter aufnehmen</h2><p class="hint">Halte ein Futter gedrückt und ziehe es auf das Einhorn.</p><div class="foods"><div class="food" role="button" tabindex="0" data-food="apple"><span class="emoji">🍎</span>Apfel</div><div class="food" role="button" tabindex="0" data-food="carrot"><span class="emoji">🥕</span>Karotte</div></div></section>
+<section class="panel"><h2>🧺 Pflege dein Einhorn</h2><div class="actions">
+ <button class="action" data-action="brush"><span>🪮</span>Bürsten</button>
+ <button class="action" data-action="wash"><span>🛁</span>Waschen</button>
+ <button class="action" data-action="hug"><span>🤗</span>Kuscheln</button>
+</div></section>
+<section class="panel customize">
+ <div><h2>🎨 Mähnenfarbe</h2><div class="choices" id="colors">
+ <button class="swatch" style="background:linear-gradient(135deg,#ff82c8,#ffc9e8)" data-color="#ff8bc7" aria-label="Rosa" aria-pressed="true"></button>
+ <button class="swatch" style="background:linear-gradient(135deg,#ad75ff,#e2b7ff)" data-color="#b67aff" aria-label="Lila" aria-pressed="false"></button>
+ <button class="swatch" style="background:linear-gradient(135deg,#62dcff,#a2ffeb)" data-color="#54cce8" aria-label="Blau" aria-pressed="false"></button>
+ <button class="swatch" style="background:linear-gradient(135deg,#ffdc62,#ff9e9e)" data-color="#ffbd54" aria-label="Sonnengelb" aria-pressed="false"></button>
+ <button class="swatch" style="background:linear-gradient(135deg,#ff8e76,#9af0a2,#a6a2ff)" data-color="rainbow" aria-label="Regenbogen" aria-pressed="false"></button>
+ </div></div>
+ <div><h2>👑 Accessoires</h2><div class="choices" id="accessories">
+ <button class="choice" data-accessory="" aria-pressed="true">Keins</button><button class="choice" data-accessory="👑" aria-pressed="false">👑 Krone</button><button class="choice" data-accessory="🎀" aria-pressed="false">🎀 Schleife</button><button class="choice" data-accessory="🌼" aria-pressed="false">🌼 Blume</button><button class="choice" data-accessory="🕶️" aria-pressed="false">🕶️ Cool</button>
+ </div></div>
+</section>
+<button class="action" id="reset" style="min-height:48px">🔄 Neu anfangen</button>
+<footer>Dein Spielstand wird auf diesem Gerät gespeichert, wenn der Browser das erlaubt. 💖</footer>
+</main>
+<script>
+(() => {
+ const KEY='regenbogen-einhorn-v2';
+ const defaults={happiness:70,score:0,mane:'#ff8bc7',accessory:'',kind:'',name:'Sternchen'};let state={...defaults};
+ const $=id=>document.getElementById(id);
+ function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+ function load(){try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&typeof s==='object')state={...defaults,...s}}catch(e){}}
+ function render(){ $('happyText').textContent=state.happiness+' %';$('happyBar').style.width=state.happiness+'%';$('score').textContent=state.score;$('energyBar').style.width=Math.min(100,state.score%101)+'%';$('petNameInput').value=state.name||'';document.querySelectorAll('.mane-shape').forEach(el=>{el.style.fill=state.mane==='rainbow'?'url(#rainbowMane)':state.mane});$('accessory').textContent=state.accessory;$('accessory').className='accessory '+(state.kind||'');document.querySelectorAll('[data-color]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.color===state.mane)));document.querySelectorAll('[data-accessory]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.accessory===state.accessory))); }
+ function celebrate(emoji){const el=document.createElement('div');el.className='action-pop';el.textContent=emoji;el.style.left=(25+Math.random()*45)+'%';el.style.top='35%';$('scene').appendChild(el);$('unicornWrap').animate([{transform:'translateY(8px) rotate(0)'},{transform:'translateY(-8px) rotate(-3deg)'},{transform:'translateY(8px) rotate(3deg)'}],{duration:500});setTimeout(()=>el.remove(),850)}
+ function care(type){if(state.happiness>=100){$('message').textContent='Ich bin schon rundum glücklich! 💖 Warte, bis ich wieder Pflege brauche.';return}const v={apple:[12,10,'Mmmh, ein knackiger Apfel! 🍎','🍎💖'],carrot:[10,10,'Knusper-knusper! Die Karotte schmeckt toll! 🥕','🥕✨'],brush:[15,8,'Die Mähne glänzt wunderschön! 🪮','✨🩷'],wash:[10,8,'Plitsch-platsch! Jetzt bin ich blitzsauber! 🛁','🫧✨'],hug:[8,5,'Eine kuschelige Umarmung! 💗','💞']}[type];if(!v)return;state.happiness=Math.min(100,state.happiness+v[0]);state.score+=v[1];$('message').textContent=v[2];render();save();celebrate(v[3]);}
+ document.querySelectorAll('[data-action]').forEach(b=>b.addEventListener('click',()=>care(b.dataset.action)));
+ $('saveName').addEventListener('click',()=>{const typed=$('petNameInput').value.trim();if(!typed){$('message').textContent='Gib deinem Einhorn einen Namen ein. 💖';return}state.name=typed;$('message').textContent='Hallo '+state.name+'! Wie schön, dass es dich gibt! 🌈';save();render();celebrate('💖')});$('petNameInput').addEventListener('keydown',e=>{if(e.key==='Enter')$('saveName').click()});
+ document.querySelectorAll('[data-color]').forEach(b=>b.addEventListener('click',()=>{state.mane=b.dataset.color;$('message').textContent='Wow! Die Mähne hat eine neue Zauberfarbe! 🌈';render();save();celebrate('🌈✨')}));
+ document.querySelectorAll('[data-accessory]').forEach(b=>b.addEventListener('click',()=>{state.accessory=b.dataset.accessory;state.kind=b.dataset.kind||'';$('message').textContent=state.accessory?'Ein magischer neuer Look! Das steht mir toll! 💖':'Ganz natürlich und wunderschön! ✨';render();save();celebrate(state.accessory||'✨')}));
+ document.querySelectorAll('[data-food]').forEach(food=>{food.addEventListener('pointerdown',e=>{e.preventDefault();food.setPointerCapture(e.pointerId);food.dataset.dragging='1';food.classList.add('dragging');food.dataset.x=e.clientX;food.dataset.y=e.clientY});food.addEventListener('pointermove',e=>{if(food.dataset.dragging==='1')food.style.transform=`translate(${e.clientX-Number(food.dataset.x)}px,${e.clientY-Number(food.dataset.y)}px) scale(1.08)`});const finish=e=>{if(food.dataset.dragging!=='1')return;food.dataset.dragging='0';food.classList.remove('dragging');food.style.transform='';const r=$('scene').getBoundingClientRect();if(e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom)care(food.dataset.food);else $('message').textContent='Zieh das Futter direkt auf das Einhorn, dann kann es essen! 🍎🥕'};food.addEventListener('pointerup',finish);food.addEventListener('pointercancel',finish);food.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();care(food.dataset.food)}})});
+ $('reset').addEventListener('click',()=>{state={...defaults};$('message').textContent='Ein frischer Zauber! Dein Abenteuer beginnt von vorn! 🌟';render();save();celebrate('🌟')});load();render();$('message').textContent='Hallo '+(state.name||'Sternchen')+'! Zieh einen Apfel oder eine Karotte zu mir! 💕';
+})();
+</script>
+</body></html>
