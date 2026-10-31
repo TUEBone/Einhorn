@@ -1,114 +1,3513 @@
 <!doctype html>
 <html lang="de">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta name="theme-color" content="#f6c7f3">
-<title>Regenbogen-Einhorn</title>
-<style>
-:root{--pink:#ffb8df;--purple:#bca5ff;--ink:#593d78;--cream:#fff9ff}
-*{box-sizing:border-box}
-html,body{margin:0;min-height:100%;font-family:ui-rounded,"Trebuchet MS",system-ui,sans-serif;color:var(--ink)}
-body{background:linear-gradient(160deg,#ffd7ef 0%,#e6d9ff 48%,#c8f4ff 100%);padding:env(safe-area-inset-top) 12px env(safe-area-inset-bottom);overflow-x:hidden}
-.app{max-width:520px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column;gap:12px;padding:12px 0 18px}
-header{text-align:center;padding:5px 4px 0}
-h1{font-size:clamp(1.65rem,7vw,2.35rem);margin:0;color:#8a4db3;text-shadow:0 2px #fff}
-.subtitle{margin:3px 0 0;font-size:.94rem}
-.name-row{display:flex;gap:8px}.name-row input{flex:1;min-width:0;font:inherit;font-size:1rem;padding:11px 12px;border-radius:14px;border:2px solid #e3c9f4;background:#fffaff;color:var(--ink)}.name-save{padding:10px 14px;border-radius:14px;background:#d8b9ff;color:#573679;box-shadow:0 3px 0 #b391df}.name-save:active{transform:translateY(2px)}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.stat,.panel{background:#ffffffd9;border:2px solid #fff;border-radius:20px;box-shadow:0 5px 0 #c7a8e8a6;padding:11px}
-.statline{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:.92rem}
-.track{height:13px;background:#f0e3fa;border-radius:99px;margin-top:7px;overflow:hidden;border:1px solid #fff}
-.fill{height:100%;width:70%;border-radius:99px;transition:width .35s ease;background:linear-gradient(90deg,#ff91c8,#b98aff,#78d9ff)}
-.score{font-size:1.15rem;font-weight:900;color:#9a56c8}
-.scene{position:relative;overflow:hidden;min-height:270px;border-radius:26px;border:3px solid #fff;background:linear-gradient(#c9f3ff,#e9e1ff 65%,#d4ffd9);box-shadow:0 7px 0 #b99bdc;display:flex;align-items:center;justify-content:center}
-.cloud{position:absolute;font-size:2.2rem;opacity:.8;animation:float 4s ease-in-out infinite}
-.c1{top:13px;left:15px}.c2{top:38px;right:18px;animation-delay:-2s}
-.star{position:absolute;color:#fff36c;font-size:1.3rem;animation:twinkle 1.5s infinite alternate}
-.s1{top:75px;left:18%}.s2{top:32%;right:13%}.s3{bottom:24%;left:12%}.s4{bottom:17%;right:20%}
-.ground{position:absolute;bottom:-35px;width:125%;height:90px;background:#b9f3c8;border-radius:50%}
-.unicorn-wrap{position:relative;z-index:2;transform:translateY(8px);transition:transform .25s}
-.unicorn{font-size:clamp(7.5rem,36vw,11rem);filter:drop-shadow(0 8px 2px #8f6eb044);line-height:1}
-.mane-label{position:absolute;left:4%;right:4%;top:68%;text-align:center;font-size:1.15rem;letter-spacing:2px;pointer-events:none}
-.accessory{position:absolute;top:-8px;right:-10px;font-size:2.4rem;transform:rotate(12deg)}
-.unicorn-svg{display:block;width:min(84vw,330px);height:auto;overflow:visible;filter:drop-shadow(0 8px 2px #8f6eb044)}.mane-shape{fill:var(--mane,#ff8bc7);transition:fill .3s}.accessory{position:absolute;z-index:4;left:69%;top:17%;transform:translate(-50%,-50%);font-size:2.4rem;filter:drop-shadow(0 2px 1px #79519a55);pointer-events:none;white-space:nowrap}.accessory.glasses{top:42%;left:69%;font-size:2.4rem;transform:translate(-50%,-50%) rotate(-5deg)}.accessory.crown{top:3%;left:70%;font-size:2.5rem}.accessory.bow{top:20%;left:78%;font-size:2.2rem}.accessory.flower{top:27%;left:78%;font-size:2.1rem}.foods{display:flex;gap:10px;flex-wrap:wrap}.food{display:flex;align-items:center;gap:7px;background:#fff0c9;border:2px solid white;border-radius:16px;padding:9px 13px;box-shadow:0 4px 0 #e4c18a;color:#784e30;font-weight:800;user-select:none;-webkit-user-select:none;touch-action:none;cursor:grab}.food .emoji{font-size:1.7rem}.food.dragging{opacity:.55}.hint{font-size:.83rem;margin:0 0 9px;color:#805b94}.scene.drop-target{outline:4px dashed #ff8acb;outline-offset:-8px}.action-pop{position:absolute;z-index:5;font-size:2.4rem;animation:pop .8s ease-out forwards;pointer-events:none}
-.message{min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:800;font-size:1rem;color:#8845a9;padding:10px;background:#fff8ffdd;border-radius:16px;border:2px dashed #d8a7ef}
-h2{font-size:1.05rem;margin:0 0 9px}
-.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-button{font:inherit;font-weight:800;border:0;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-.action{min-height:76px;border-radius:18px;background:linear-gradient(150deg,#fff,#ffe5f5);box-shadow:0 4px 0 #dda9d7;color:#70418f;padding:9px 4px;font-size:.92rem}
-.action:active,.choice:active{transform:translateY(3px);box-shadow:0 1px 0 #dda9d7}
-.action span{display:block;font-size:1.8rem;margin-bottom:2px}
-.customize{display:grid;gap:12px}
-.choices{display:flex;gap:9px;flex-wrap:wrap}
-.choice{min-width:48px;min-height:47px;padding:7px 11px;border-radius:15px;background:#f8edff;border:2px solid #fff;box-shadow:0 3px 0 #d5b6e8;color:#70418f;font-size:1.05rem}
-.swatch{width:43px;height:43px;min-width:43px;border-radius:50%;padding:0;border:3px solid white;box-shadow:0 2px 0 #c5a6dc}
-.swatch[aria-pressed="true"],.choice[aria-pressed="true"]{outline:3px solid #9955c9;outline-offset:2px}
-footer{text-align:center;font-size:.78rem;opacity:.75;padding:2px}
-@keyframes float{50%{transform:translateY(-8px)}}@keyframes twinkle{to{opacity:.35;transform:scale(.7) rotate(25deg)}}@keyframes pop{0%{opacity:0;transform:translateY(15px) scale(.5)}25%{opacity:1;transform:translateY(-8px) scale(1.15)}100%{opacity:0;transform:translateY(-70px) scale(.8)}}
-@media(min-height:850px){.scene{min-height:310px}.app{gap:14px}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#f5edf9" />
+    <meta
+      name="description"
+      content="Deine kleine Einhorn-Zauberwelt: gestalten, pflegen, spielen und Sterne sammeln. Kostenlos und ohne Anmeldung."
+    />
+    <title>Einhorn-Zauberwelt</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ctext y='32' font-size='32'%3E✦%3C/text%3E%3C/svg%3E"
+    />
+    <style>
+:root {
+  --ink: #514665;
+  --muted: #8a8096;
+  --purple: #9272ad;
+  --deep: #74558e;
+  --pink: #e6b6ca;
+  --cream: #faf8f4;
+  --line: #e9e2ed;
+  --green: #84a995;
+  --shadow: 0 8px 30px #64507709;
+  font-family: ui-rounded, "Trebuchet MS", system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--cream);
+  font-synthesis: none;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+button,
+input,
+textarea {
+  font: inherit;
+}
+button,
+a,
+input,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+button {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+button {
+  color: inherit;
+}
+button,
+a {
+  touch-action: manipulation;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid #9b7bb7;
+  outline-offset: 4px;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button {
+  border: 0;
+}
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+h1,
+h2,
+h3 {
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+h1 {
+  font-size: clamp(30px, 4vw, 46px);
+  line-height: 1.12;
+  margin-bottom: 12px;
+}
+h2 {
+  font-size: 26px;
+}
+h3 {
+  font-size: 18px;
+}
+p {
+  line-height: 1.6;
+}
+.topbar {
+  height: 94px;
+  max-width: 1280px;
+  margin: auto;
+  padding: 0 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.brand {
+  display: flex;
+  gap: 11px;
+  align-items: center;
+  font-family: Georgia, serif;
+  font-size: 27px;
+  line-height: 1;
+}
+.brand-mark {
+  color: #a78bbd;
+  background: #eee6f2;
+  border-radius: 15px;
+  width: 43px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  font-size: 33px;
+}
+.brand-sub {
+  font:
+    9px "Trebuchet MS",
+    sans-serif;
+  letter-spacing: 4px;
+  display: block;
+  margin-top: 7px;
+}
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.balance {
+  background: #f7efda;
+  border: 1px solid #eee1bf;
+  border-radius: 30px;
+  padding: 10px 18px;
+  font-size: 15px;
+}
+.balance > span {
+  color: #c49c47;
+  font-size: 20px;
+  margin-right: 7px;
+}
+.icon-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  font-size: 20px;
+  padding: 12px 5px;
+}
+.icon-button span {
+  font-size: 12px;
+}
+.icon-button:hover {
+  color: var(--purple);
+}
+#app {
+  max-width: 1192px;
+  margin: auto;
+  padding: 18px 0 125px;
+}
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--purple);
+  margin-bottom: 12px;
+}
+.page-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 27px;
+}
+.page-heading p {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 0;
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--line);
+  border-radius: 30px;
+  padding: 9px 15px;
+  background: #fff9;
+  font-size: 11px;
+  color: var(--muted);
+}
+.world-hero {
+  position: relative;
+  min-height: 434px;
+  border: 6px solid #fff;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.landscape {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+}
+.world-copy {
+  position: absolute;
+  left: 35px;
+  top: 30px;
+  max-width: 290px;
+}
+.world-copy h2 {
+  font-family: Georgia, serif;
+  font-size: 32px;
+  line-height: 1.2;
+  margin: 9px 0;
+  color: #61556f;
+}
+.world-copy p {
+  font-size: 12px;
+  color: #7b7283;
+  max-width: 230px;
+}
+.world-copy .pill {
+  background: #ffffffa6;
+  border: 0;
+  color: #8b739c;
+}
+.world-pony {
+  position: absolute;
+  width: 310px;
+  bottom: 10px;
+  left: 44%;
+  transform: translateX(-50%);
+  cursor: pointer;
+}
+.world-sign {
+  position: absolute;
+  right: 36px;
+  bottom: 32px;
+  background: #fffefaeb;
+  border: 1px solid white;
+  border-radius: 15px;
+  padding: 16px 20px;
+  box-shadow: 0 5px 15px #6b5a7920;
+  max-width: 230px;
+}
+.world-sign p {
+  font-size: 11px;
+  color: var(--muted);
+  margin: 5px 0 12px;
+}
+.world-sign strong {
+  font-size: 15px;
+  font-weight: 600;
+}
+.tiny-link {
+  font-size: 11px;
+  color: var(--deep);
+  background: none;
+  padding: 0;
+}
+.sparkle {
+  position: absolute;
+  color: #fff7d5;
+  font-size: 25px;
+  animation: twinkle 3s infinite alternate;
+  pointer-events: none;
+}
+.sparkle.one {
+  top: 47%;
+  left: 48%;
+}
+.sparkle.two {
+  top: 57%;
+  left: 31%;
+  font-size: 17px;
+  animation-delay: -1s;
+}
+.butterfly {
+  position: absolute;
+  color: #c89ebf;
+  font-size: 27px;
+  left: 64%;
+  top: 43%;
+  animation: butterfly 7s infinite ease-in-out;
+}
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 32px 0 17px;
+}
+.section-heading h2 {
+  font-size: 19px;
+  margin: 0;
+}
+.section-heading span {
+  font-size: 11px;
+  color: var(--muted);
+}
+.destinations {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.destination {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  padding: 21px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 19px;
+  box-shadow: var(--shadow);
+  transition:
+    transform 0.2s,
+    border-color 0.2s;
+}
+.destination:hover {
+  transform: translateY(-4px);
+  border-color: #c3acd5;
+}
+.destination .tile-icon {
+  width: 60px;
+  height: 64px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  font-size: 29px;
+  background: var(--tint, #f0e7f5);
+  color: var(--accent, #a383b7);
+  flex-shrink: 0;
+}
+.destination h3 {
+  font-size: 15px;
+  letter-spacing: -0.02em;
+  margin: 0 0 6px;
+}
+.destination p {
+  font-size: 11px;
+  color: var(--muted);
+  margin: 0;
+}
+.destination .arrow {
+  margin-left: auto;
+  color: #b5a4c3;
+}
+.world-footer {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 25px;
+  letter-spacing: 0.4px;
+}
+#navigation {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  border: 1px solid #e8dfed;
+  background: #fffefbf5;
+  backdrop-filter: blur(12px);
+  padding: 9px 13px;
+  border-radius: 22px;
+  z-index: 20;
+  box-shadow: 0 10px 35px #69527a15;
+}
+#navigation a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  font-size: 9px;
+  min-width: 84px;
+  padding: 9px 12px;
+  border-radius: 14px;
+  color: #95879e;
+}
+#navigation a > span {
+  font-size: 22px;
+  line-height: 1;
+}
+#navigation a.active {
+  color: var(--deep);
+  background: #eee6f4;
+}
+#navigation a:hover {
+  background: #f6f1f8;
+}
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+.panel {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 23px;
+  padding: 26px;
+  box-shadow: var(--shadow);
+}
+.panel h2 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+.panel p.description {
+  font-size: 12px;
+  color: var(--muted);
+}
+.preview {
+  position: relative;
+  min-height: 420px;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 45%, #fff9f2, #eee5f4);
+  border-radius: 23px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 6px solid #fff;
+  box-shadow: var(--shadow);
+}
+.preview .pony {
+  width: 85%;
+  max-width: 420px;
+}
+.preview:before {
+  content: "✧";
+  position: absolute;
+  font-size: 60px;
+  color: #c6afd6;
+  top: 10%;
+  right: 12%;
+  opacity: 0.5;
+}
+.preview:after {
+  content: "✦";
+  position: absolute;
+  font-size: 24px;
+  color: #d2b97d;
+  bottom: 20%;
+  left: 12%;
+  opacity: 0.6;
+  pointer-events: none;
+}
+.preview-label {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  text-align: center;
+  font-size: 12px;
+  color: #9a89a4;
+}
+.pony {
+  width: 100%;
+  overflow: visible;
+}
+.pony-body {
+  animation: breathe 3s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+.tail {
+  animation: tail 3.5s ease-in-out infinite;
+}
+.ear {
+  animation: ear 6s infinite;
+}
+.eyes {
+  animation: blink 5s infinite;
+  transform-origin: 212px 101px;
+}
+.sleeping .eyes {
+  animation: none;
+}
+.sleeping .pony-body {
+  animation: breathe 5s infinite;
+}
+.sleeping {
+  transform: translateY(18px) rotate(-6deg);
+}
+.pony.chew .mouth {
+  animation: chew 0.2s 5;
+  transform-origin: 250px 140px;
+}
+.pony.bounce .pony-body {
+  animation: jump 0.55s ease-in-out;
+}
+.pony.wash {
+  filter: drop-shadow(0 0 15px #b6e4f4);
+}
+.pony.brush .tail {
+  animation: tail 0.25s 4;
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.between {
+  justify-content: space-between;
+}
+.control-group {
+  margin: 21px 0;
+}
+.control-group:first-child {
+  margin-top: 0;
+}
+.control-label {
+  font-size: 12px;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 11px;
+}
+.swatches {
+  display: flex;
+  gap: 11px;
+  flex-wrap: wrap;
+}
+.swatch {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 0 0 1px #e8dfea;
+  position: relative;
+}
+.swatch[aria-pressed="true"] {
+  box-shadow: 0 0 0 2px var(--purple);
+}
+.swatch[aria-pressed="true"]:after {
+  content: "✓";
+  color: #514665;
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+}
+.chip {
+  padding: 10px 14px;
+  background: #f6f2f8;
+  border: 1px solid #ebe2ef;
+  border-radius: 11px;
+  font-size: 12px;
+  min-height: 42px;
+}
+.chip[aria-pressed="true"] {
+  background: #eae0f0;
+  border-color: #b69bca;
+  color: var(--deep);
+}
+.chip small {
+  font-size: 10px;
+  color: #a08444;
+  display: block;
+  margin-top: 3px;
+}
+.button {
+  background: var(--purple);
+  color: white;
+  padding: 13px 23px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  box-shadow: 0 3px 0 #76548e20;
+}
+.button:hover {
+  background: var(--deep);
+}
+.button.secondary {
+  background: #f0e9f4;
+  color: var(--deep);
+  box-shadow: none;
+}
+.button.light {
+  background: white;
+  color: var(--deep);
+}
+.button.danger {
+  background: #f7e7e9;
+  color: #a36873;
+}
+.name-edit {
+  display: flex;
+  gap: 9px;
+  margin-top: 16px;
+}
+.name-edit input {
+  min-width: 0;
+  flex: 1;
+}
+input,
+textarea {
+  border: 1px solid #dcd0e5;
+  border-radius: 11px;
+  background: #fffcff;
+  padding: 12px;
+  color: var(--ink);
+  width: 100%;
+}
+input {
+  font-size: 16px;
+}
+textarea {
+  resize: vertical;
+  min-height: 120px;
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.muted {
+  color: var(--muted);
+  font-size: 12px;
+}
+.care-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 13px;
+  margin-bottom: 22px;
+}
+.need {
+  background: white;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  font-size: 11px;
+}
+.need .row {
+  justify-content: space-between;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+.need b {
+  font-size: 10px;
+  color: var(--muted);
+}
+.track {
+  height: 6px;
+  background: #f1eaf2;
+  border-radius: 9px;
+  overflow: hidden;
+}
+.track > i {
+  height: 100%;
+  display: block;
+  border-radius: 9px;
+  background: var(--pink);
+  transition: width 0.5s;
+}
+.care-message {
+  background: #fbf5f8;
+  padding: 13px;
+  border-radius: 12px;
+  font-size: 12px;
+  text-align: center;
+  min-height: 46px;
+  margin-top: 14px;
+}
+.foods {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+}
+.food {
+  width: calc(33.33% - 6px);
+  border: 1px solid #eee3ed;
+  background: #fffaf5;
+  padding: 13px 6px 10px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 10px;
+  touch-action: none;
+  user-select: none;
+  cursor: grab;
+}
+.food svg {
+  width: 48px;
+  height: 48px;
+  pointer-events: none;
+}
+.food.dragging {
+  opacity: 0.5;
+}
+.food-ghost {
+  position: fixed;
+  pointer-events: none;
+  width: 65px;
+  height: 65px;
+  z-index: 100;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 5px 6px #70547744);
+}
+.drop-ready {
+  outline: 3px dashed #b095c5;
+  outline-offset: -13px;
+}
+.care-tools {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
+}
+.care-tool {
+  background: #eff3f0;
+  border: 1px solid #e0e8e1;
+  padding: 14px 8px;
+  border-radius: 13px;
+  font-size: 11px;
+}
+.care-tool span {
+  display: block;
+  font-size: 25px;
+  margin-bottom: 8px;
+  color: #85a18e;
+}
+.particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;  overflow: hidden;
+}
+.particle {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  font-size: 28px;
+  color: #d8a1bd;
+  animation: particle 1.2s ease-out forwards;
+}
+.room {
+  background: linear-gradient(#efe5ee 0 66%, #d9c5b4 66%);
+  height: 430px;
+  border: 6px solid white;
+  border-radius: 23px;
+  position: relative;
+  overflow: hidden;
+}
+.room:before {
+  content: "";
+  position: absolute;
+  left: 29px;
+  top: 32px;
+  width: 100px;
+  height: 120px;
+  border-radius: 50px 50px 0 0;
+  border: 8px solid #fffbf4;
+  background:
+    linear-gradient(90deg, transparent 46%, #fffbf4 46% 54%, transparent 54%),
+    linear-gradient(transparent 46%, #fffbf4 46% 54%, transparent 54%), #c2dce6;
+  box-shadow: 0 0 0 2px #d5c4ce;
+}
+.room-pony {
+  position: absolute;
+  width: 280px;
+  bottom: 27px;
+  left: 40%;
+  transform: translateX(-50%);
+}
+.bed {
+  position: absolute;
+  background: #bca3cc;
+  width: 230px;
+  height: 65px;
+  border-radius: 35px 35px 16px 16px;
+  bottom: 38px;
+  left: 35px;
+  border: 8px solid #b093c2;
+}
+.bed:before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 0;
+  width: 55px;
+  height: 29px;
+  background: #fff3e8;
+  border-radius: 15px;
+}
+.furniture {
+  position: absolute;
+}
+.furniture.rug {
+  bottom: 15px;
+  left: 15px;
+  width: 300px;
+  height: 50px;
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    ellipse,
+    #ead4b2 0 10px,
+    #cfa6b8 12px 20px
+  );
+}
+.furniture.plant {
+  right: 20px;
+  bottom: 65px;
+  font-size: 60px;
+  color: #81a48a;
+}
+.furniture.lamp {
+  right: 50px;
+  top: 20px;
+  color: #d7b45f;
+  font-size: 62px;
+  text-shadow: 0 0 25px #f8e7a9;
+}
+.furniture.picture {
+  right: 25px;
+  top: 115px;
+  border: 7px solid #fff5df;
+  background: #d5e5e6;
+  padding: 10px 16px;
+  font-size: 35px;
+  color: #c09dc1;
+}
+.shop {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 20px;
+}
+.shop .chip {
+  text-align: left;
+  min-height: 70px;
+}
+.shop .chip.owned {
+  border-color: #a8c7b2;
+  background: #edf5ef;
+}
+.game-shell {
+  background: #fff;
+  border: 1px solid var(--line);
+  padding: 10px;
+  border-radius: 25px;
+  overflow: hidden;
+}
+.game-stage {
+  height: 420px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 17px;
+  background: #e6eff2;
+  touch-action: none;
+  outline-offset: -4px;
+}
+.game-stage .landscape {
+  width: 150%;
+  max-width: none;
+  left: -20%;
+}
+.game-ground {
+  position: absolute;
+  height: 70px;
+  bottom: 0;
+  width: 100%;
+  background: #bdd3b0;
+  border-top: 8px solid #9fb995;
+}
+.game-player {
+  position: absolute;
+  width: 116px;
+  height: 102px;
+  left: 12%;
+  bottom: 70px;
+  z-index: 3;
+  will-change: transform;
+}
+.game-player .pony {
+  height: 100%;
+  width: 100%;
+}
+.game-player .pony-body {
+  animation: none;
+}
+.game-item {
+  position: absolute;
+  left: 0;
+  bottom: 70px;
+  will-change: transform;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.game-item.star {
+  width: 32px;
+  height: 32px;
+  color: #bb933e;
+  font-size: 32px;
+  text-shadow: 0 2px #fff1bd;
+}
+.game-item.obstacle {
+  width: 36px;
+  height: 40px;
+  border-radius: 40% 40% 8px 8px;
+  background: #ba91bd;
+  border: 3px solid #a680ab;
+}
+.game-item.obstacle:before {
+  content: "";
+  position: absolute;
+  top: -12px;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: #e3bfdb;
+  border: 2px solid #b08bb7;
+}
+.game-item.cloud {
+  width: 65px;
+  height: 43px;
+  background: #a8b4cb;
+  border-radius: 30px;
+  box-shadow: 15px -9px #a8b4cb;
+}
+.game-item.charm {
+  width: 30px;
+  height: 30px;
+  color: #8f70b1;
+  font-size: 32px;
+}
+.game-overlay {
+  position: absolute;
+  inset: 0;
+  background: #f5edf3de;
+  backdrop-filter: blur(4px);
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 25px;
+}
+.game-overlay h2 {
+  font-family: Georgia, serif;
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+.game-overlay p {
+  font-size: 13px;
+  max-width: 360px;
+}
+.game-overlay .row {
+  justify-content: center;
+}
+.game-hud {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 4;
+  pointer-events: none;
+}
+.game-hud .pill {
+  background: #fffdf4eb;
+  color: var(--ink);
+  font-weight: 700;
+}
+.game-hud button {
+  pointer-events: auto;
+  border-radius: 10px;
+  background: #fffdf4;
+  padding: 10px 14px;
+}
+.game-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 14px 8px;
+  gap: 15px;
+}
+.game-controls p {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0;
+}
+.game-controls .button {
+  min-width: 150px;
+  user-select: none;
+}
+.memory-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 13px;
+  max-width: 640px;
+  margin: 25px auto;
+}
+.memory-card {
+  aspect-ratio: 1.1;
+  border: 2px solid #fff;
+  border-radius: 16px;
+  background: repeating-linear-gradient(45deg, #c0a8d1 0 8px, #c5b0d5 8px 16px);
+  box-shadow: 0 3px 0 #ab91bc;
+  color: white;
+  font-size: 31px;
+  transition: transform 0.2s;
+}
+.memory-card.revealed {
+  background: #f8f0e3;
+  color: #9f7caa;
+  transform: rotateY(0);
+}
+.memory-card.matched {
+  background: #e6f0e8;
+  color: #76967e;
+  box-shadow: 0 3px 0 #bdd1c0;
+  cursor: default;
+}
+.memory-status {
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+}
+.garden {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin: 25px 0;
+}
+.plot {
+  background: linear-gradient(#edf1e4, #f6e7d1);
+  border: 1px solid #e0d9c5;
+  border-radius: 20px;
+  padding: 15px;
+  text-align: center;
+}
+.plot svg {
+  height: 150px;
+  max-width: 100%;
+  display: block;
+  margin: auto;
+}
+.plot h3 {
+  font-size: 14px;
+}
+.plot .button {
+  width: 100%;
+  padding: 12px;
+}
+.plot p {
+  font-size: 11px;
+  color: var(--muted);
+}
+.empty-plot {
+  height: 150px;
+  display: grid;
+  place-items: center;
+  color: #b29a80;
+  font-size: 50px;
+}
+.seed-select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #fffcf5;
+  margin-bottom: 10px;
+  font: inherit;
+  font-size: 12px;
+  color: var(--ink);
+}
+.garden-note {
+  background: #f1f5ed;
+  padding: 16px;
+  border-radius: 14px;
+  font-size: 12px;
+  line-height: 1.7;
+  color: #7d9079;
+}
+.back-link {
+  display: inline-flex;
+  font-size: 12px;
+  color: var(--purple);
+  margin-bottom: 17px;
+}
+dialog {
+  border: 1px solid #e4d8eb;
+  border-radius: 24px;
+  padding: 30px;
+  width: min(94vw, 490px);
+  max-height: 90dvh;
+  overflow: auto;
+  color: var(--ink);
+  box-shadow: 0 25px 100px #4c36513b;
+  background: #fffdf9;
+}
+dialog::backdrop {
+  background: #4e3d6455;
+  backdrop-filter: blur(5px);
+}
+dialog h2 {
+  font-family: Georgia, serif;
+  font-size: 29px;
+  margin: 12px 0;
+}
+dialog p {
+  font-size: 13px;
+  color: var(--muted);
+}
+.dialog-close {
+  float: right;
+  border-radius: 50%;
+  background: #f1eaf3;
+  width: 32px;
+  height: 32px;
+  font-size: 18px;
+}
+.dialog-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+.dialog-error {
+  font-size: 12px;
+  color: #a4516d;
+  margin: 12px 0;
+  min-height: 18px;
+}
+.dialog-note {
+  font-size: 11px;
+  margin-top: 15px !important;
+}
+.dialog-star {
+  font-size: 40px;
+  color: #b79ac8;
+}
+.save-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.save-tabs .chip {
+  flex: 1;
+}
+#toast {
+  position: fixed;
+  bottom: 125px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  max-width: min(90vw, 460px);
+  background: #5d4b6cf5;
+  color: white;
+  padding: 14px 22px;
+  border-radius: 14px;
+  font-size: 12px;
+  box-shadow: 0 5px 22px #58456825;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.25s;
+  text-align: center;
+}
+#toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.inline-notice {
+  font-size: 12px;
+  color: var(--green);
+  min-height: 18px;
+  margin: 12px 0;
+}
+.welcome-pony {
+  width: 190px;
+  margin: -15px auto -6px;
+}
+.dialog-name {
+  margin-top: 12px;
+}
+.sound-status {
+  font-size: 10px;
+}
+.game-notice {
+  min-height: 20px;
+  text-align: center;
+  color: var(--purple);
+  font-size: 13px;
+  margin: 12px;
+}
+.instructions {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 17px;
+}
+.instructions span {
+  background: #f0eaf3;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+@keyframes breathe {
+  50% {
+    transform: translateY(-3px) rotate(0.5deg);
+  }
+}
+@keyframes tail {
+  50% {
+    transform: rotate(9deg);
+  }
+}
+@keyframes ear {
+  0%,
+  80%,
+  100% {
+    transform: rotate(0);
+  }
+  85%,
+  90% {
+    transform: rotate(-12deg);
+  }
+}
+@keyframes blink {
+  0%,
+  43%,
+  47%,
+  100% {
+    transform: scaleY(1);
+  }
+  45% {
+    transform: scaleY(0.12);
+  }
+}
+@keyframes twinkle {
+  to {
+    opacity: 0.2;
+    transform: scale(0.6);
+  }
+}
+@keyframes butterfly {
+  50% {
+    transform: translate(35px, -20px) rotate(15deg);
+  }
+}
+@keyframes jump {
+  50% {
+    transform: translateY(-22px) rotate(-4deg);
+  }
+}
+@keyframes chew {
+  50% {
+    transform: scaleY(0.4);
+  }
+}
+@keyframes particle {
+  to {
+    transform: translate(var(--dx, 30px), -110px) rotate(25deg);
+    opacity: 0;
+  }
+}
+@keyframes clouds {
+  50% {
+    transform: translateX(25px);
+  }
+}
+.sky-cloud {
+  animation: clouds 20s ease-in-out infinite;
+}
+@media (min-width: 1500px) {
+  #app {
+    padding-top: 30px;
+  }
+  .world-hero {
+    min-height: 460px;
+  }
+}
+@media (max-width: 1260px) {
+  #app {
+    margin: 0 30px;
+  }
+  .topbar {
+    padding: 0 30px;
+  }
+}
+@media (max-width: 800px) {
+  .world-hero {
+    min-height: 410px;
+  }
+  .world-copy {
+    left: 22px;
+    top: 23px;
+  }
+  .world-copy h2 {
+    font-size: 28px;
+  }
+  .world-copy p {
+    max-width: 180px;
+  }
+  .world-pony {
+    left: 45%;
+    width: 270px;
+    bottom: 0;
+  }
+  .world-sign {
+    right: 20px;
+    bottom: 24px;
+    max-width: 190px;
+    padding: 15px;
+  }
+  .destinations {
+    gap: 10px;
+  }
+  .destination {
+    padding: 15px 12px;
+    gap: 10px;
+  }
+  .destination .tile-icon {
+    width: 43px;
+    height: 48px;
+    font-size: 24px;
+  }
+  .destination p {
+    font-size: 10px;
+  }
+  .destination .arrow {
+    display: none;
+  }
+  .split {
+    gap: 15px;
+  }
+  .panel {
+    padding: 20px;
+  }
+  .preview {
+    min-height: 370px;
+  }
+  .room-pony {
+    width: 230px;
+    left: 45%;
+  }
+  .game-stage {
+    height: 380px;
+  }
+}
+@media (max-width: 600px) {
+  .topbar {
+    height: 80px;
+    padding: 0 20px;
+    gap: 10px;
+  }
+  .brand {
+    font-size: 22px;
+    gap: 8px;
+  }
+  .brand-mark {
+    width: 34px;
+    height: 38px;
+    border-radius: 11px;
+    font-size: 25px;
+  }
+  .brand-sub {
+    font-size: 7px;
+    letter-spacing: 3px;
+  }
+  .top-actions {
+    gap: 9px;
+  }
+  .icon-button {
+    font-size: 22px;
+    padding: 10px 4px;
+  }
+  .icon-button span {
+    display: none;
+  }
+  .balance {
+    padding: 7px 10px;
+    font-size: 12px;
+  }
+  .balance > span {
+    font-size: 16px;
+    margin-right: 2px;
+  }
+  #app {
+    margin: 0 18px;
+    padding-top: 13px;
+    padding-bottom: 112px;
+  }
+  .page-heading {
+    margin-bottom: 20px;
+  }
+  .page-heading h1 {
+    font-size: 31px;
+  }
+  .page-heading p {
+    font-size: 12px;
+  }
+  .page-heading > .pill {
+    display: none;
+  }
+  .eyebrow {
+    font-size: 9px;
+    letter-spacing: 2.5px;
+    margin-bottom: 10px;
+  }
+  .world-hero {
+    min-height: 430px;
+    border-width: 4px;
+    border-radius: 23px;
+  }
+  .world-copy {
+    left: 20px;
+    top: 20px;
+  }
+  .world-copy h2 {
+    font-size: 29px;
+    max-width: 220px;
+  }
+  .world-copy p {
+    font-size: 11px;
+    max-width: 210px;
+  }
+  .world-copy .pill {
+    font-size: 9px;
+    padding: 6px 10px;
+  }
+  .world-hero .landscape {
+    width: 180%;
+    left: -48%;
+  }
+  .world-pony {
+    width: 250px;
+    left: 39%;
+    bottom: 57px;
+  }
+  .world-sign {
+    max-width: none;
+    left: 13px;
+    right: 13px;
+    bottom: 13px;
+    padding: 11px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    border-radius: 12px;
+  }
+  .world-sign strong {
+    font-size: 12px;
+  }
+  .world-sign p {
+    display: none;
+  }
+  .world-sign .tiny-link {
+    font-size: 10px;
+  }
+  .sparkle.one {
+    top: 50%;
+    left: 66%;
+  }
+  .sparkle.two {
+    top: 63%;
+    left: 15%;
+  }  .butterfly {
+    left: 75%;
+    top: 47%;
+  }
+  .section-heading {
+    margin-top: 26px;
+  }
+  .section-heading h2 {
+    font-size: 18px;
+  }
+  .section-heading span {
+    font-size: 9px;
+  }
+  .destinations {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 11px;
+  }
+  .destination {
+    padding: 15px 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    border-radius: 16px;
+    position: relative;
+  }
+  .destination .tile-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+  }
+  .destination h3 {
+    font-size: 13px;
+  }
+  .destination p {
+    font-size: 10px;
+    line-height: 1.4;
+  }
+  .destination .arrow {
+    display: block;
+    position: absolute;
+    right: 14px;
+    top: 26px;
+  }
+  .world-footer {
+    font-size: 9px;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+  #navigation {
+    bottom: 0;
+    width: 100%;
+    border-radius: 18px 18px 0 0;
+    gap: 0;
+    justify-content: space-around;
+    padding: 8px 4px max(9px, env(safe-area-inset-bottom));
+    border-bottom: 0;
+  }
+  #navigation a {
+    min-width: 0;
+    flex: 1;
+    padding: 7px 2px;
+    font-size: 8px;
+    gap: 6px;
+    border-radius: 10px;
+  }
+  #navigation a > span {
+    font-size: 21px;
+  }
+  .split {
+    grid-template-columns: 1fr;
+    gap: 17px;
+  }
+  .preview {
+    min-height: 300px;
+    max-height: 350px;
+  }
+  .preview .pony {
+    max-width: 310px;
+  }
+  .preview-label {
+    bottom: 10px;
+    font-size: 11px;
+  }
+  .panel {
+    padding: 20px;
+    border-radius: 20px;
+  }
+  .control-group {
+    margin: 21px 0;
+  }
+  .control-group:last-child {
+    margin-bottom: 0;
+  }
+  .swatch {
+    width: 35px;
+    height: 35px;
+  }
+  .care-stats {
+    gap: 7px;
+    margin-bottom: 13px;
+  }
+  .need {
+    padding: 11px 9px;
+    font-size: 10px;
+  }
+  .need b {
+    font-size: 9px;
+  }
+  .need .row {
+    gap: 3px;
+  }
+  .foods {
+    flex-wrap: nowrap;
+    gap: 6px;
+  }
+  .food {
+    width: 20%;
+    padding: 10px 2px;
+    font-size: 8px;
+    border-radius: 10px;
+  }
+  .food svg {
+    width: 35px;
+    height: 35px;
+  }
+  .care-tools {
+    gap: 7px;
+  }
+  .care-tool {
+    font-size: 10px;
+    padding: 13px 5px;
+  }
+  .room {
+    height: 360px;
+  }
+  .room-pony {
+    width: 260px;
+    bottom: 22px;
+  }
+  .room:before {
+    width: 80px;
+    height: 100px;
+    left: 20px;
+    top: 25px;
+  }
+  .game-stage {
+    height: 370px;
+  }
+  .game-controls {
+    padding: 14px 6px 4px;
+  }
+  .game-controls p {
+    font-size: 10px;
+    max-width: 165px;
+  }
+  .game-controls .button {
+    min-width: 120px;
+  }
+  .game-overlay h2 {
+    font-size: 28px;
+  }
+  .game-player {
+    left: 8%;
+    width: 96px;
+    height: 84px;
+  }
+  .game-hud {
+    left: 10px;
+    right: 10px;
+    top: 10px;
+  }
+  .game-hud .pill {
+    font-size: 10px;
+    padding: 8px 10px;
+  }
+  .game-overlay p {
+    font-size: 12px;
+  }
+  .memory-board {
+    gap: 9px;
+  }
+  .memory-card {
+    font-size: 25px;
+    border-radius: 12px;
+  }
+  .garden {
+    gap: 7px;
+  }
+  .plot {
+    padding: 12px 7px;
+    border-radius: 14px;
+  }
+  .plot svg,
+  .empty-plot {
+    height: 110px;
+  }
+  .plot .button {
+    font-size: 10px;
+    padding: 9px 4px;
+    min-height: 40px;
+  }
+  .plot h3 {
+    font-size: 11px;
+  }
+  .plot p {
+    font-size: 9px;
+  }
+  .seed-select {
+    font-size: 10px;
+    padding: 8px 3px;
+  }
+  .instructions {
+    font-size: 10px;
+    gap: 7px;
+  }
+  .instructions span {
+    padding: 7px 9px;
+  }
+  #toast {
+    bottom: 92px;
+  }
+  .section-heading .muted {
+    font-size: 10px;
+  }
+  .dialog-actions .button {
+    flex: 1;
+  }
+  dialog {
+    padding: 24px;
+  }
+  .shop .chip {
+    font-size: 11px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *:before,
+  *:after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Quiet visual themes distinguish the three adventure trails. */
+.game-stage[data-level="2"] .scenery {
+  filter: hue-rotate(22deg) saturate(1.12);
+}
+.game-stage[data-level="3"] .scenery {
+  filter: hue-rotate(325deg) saturate(1.25);
+}
+.game-hud button {
+  font-size: 11px;
+  min-height: 38px;
+}
+@media (max-width: 600px) {
+  .world-copy p {
+    display: none;
+  }
+  .section-heading {
+    gap: 14px;
+  }
+  .section-heading > span {
+    max-width: 110px;
+    text-align: right;
+    line-height: 1.5;
+  }
+}
+
+.game-stage .scenery {
+  position: absolute;
+  inset: 0;
+  width: 150%;
+  left: -20%;
+  will-change: transform;
+}
+.game-stage .scenery .landscape {
+  width: 100%;
+  left: 0;
+}
+.game-ground {
+  background: repeating-linear-gradient(
+    100deg,
+    #bdd3b0 0 55px,
+    #b7cfaa 55px 59px,
+    #bdd3b0 59px 120px
+  );
+}
+@media (prefers-reduced-motion: reduce) {
+  .game-stage .scenery {
+    transform: none !important;
+  }
+  .game-ground {
+    background-position: 0 0 !important;
+  }
+}
+.care-tool svg{width:52px;height:58px;display:block;margin:0 auto 6px;pointer-events:none}.care-tool>span{font-size:11px;margin:0}.care-tool[aria-pressed=true]{background:#e5dbef;border-color:#aa89c2;box-shadow:0 0 0 2px #d7c3e5}.care-tool{touch-action:none;user-select:none}.care-tool-cursor{position:absolute;z-index:8;width:80px;height:88px;transform:translate(-50%,-50%) rotate(-12deg);pointer-events:none;filter:drop-shadow(0 5px 5px #6b467744)}.care-tool-cursor[hidden]{display:none}.tool-active{touch-action:none;user-select:none}.tool-progress{position:absolute;left:10px;right:10px;top:12px;text-align:center;font-size:12px;color:#795c8d;pointer-events:none}.memory-card svg{width:85%;height:85%;display:block;margin:auto;pointer-events:none}.memory-card.matched svg{opacity:.8}
+
 </style>
-</head>
-<body>
-<main class="app">
-<header><h1>🌈 Regenbogen-Einhorn</h1><p class="subtitle">Kümmere dich um dein magisches Pony! ✨</p></header>
-<section class="stats" aria-label="Spielstand">
- <div class="stat"><div class="statline"><span>💖 Glück</span><span id="happyText">70 %</span></div><div class="track"><div id="happyBar" class="fill"></div></div></div>
- <div class="stat"><div class="statline"><span>⭐ Punkte</span><span id="score" class="score">0</span></div><div class="track"><div id="energyBar" class="fill" style="width:70%;background:linear-gradient(90deg,#9de8ff,#a5a0ff)"></div></div></div>
-</section>
-<section class="panel name-panel"><h2>💖 Wie heißt dein Einhorn?</h2><div class="name-row"><input id="petNameInput" type="text" maxlength="18" placeholder="Zum Beispiel Sternchen" aria-label="Name deines Einhorns"><button class="name-save" id="saveName" type="button">Speichern</button></div><p class="hint" style="margin:8px 0 0">Der Name wird auf diesem Gerät gespeichert. ✨</p></section>
-<section class="scene" id="scene" aria-label="Dein Einhorn">
- <div class="cloud c1">☁️</div><div class="cloud c2">☁️</div>
- <div class="star s1">✦</div><div class="star s2">✧</div><div class="star s3">✦</div><div class="star s4">✧</div>
- <div class="ground"></div>
- <div class="unicorn-wrap" id="unicornWrap"><svg class="unicorn-svg" viewBox="0 0 320 270" role="img" aria-label="Niedliches Einhorn mit bunter Mähne">
-<defs><linearGradient id="rainbowMane"><stop stop-color="#ff8e76"/><stop offset=".35" stop-color="#9af0a2"/><stop offset=".7" stop-color="#a6a2ff"/><stop offset="1" stop-color="#ff8bc7"/></linearGradient><linearGradient id="horn" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff49b"/><stop offset=".5" stop-color="#ffb9e7"/><stop offset="1" stop-color="#b99aff"/></linearGradient><linearGradient id="body" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#f3eaff"/></linearGradient></defs>
-<ellipse cx="153" cy="204" rx="83" ry="43" fill="url(#body)" stroke="#d8c6ef" stroke-width="3"/><path d="M180 203 Q171 165 183 124 Q191 97 216 87 L248 109 Q226 135 229 179 L231 213Z" fill="url(#body)" stroke="#d8c6ef" stroke-width="3"/>
-<path class="mane-shape" d="M188 139 Q147 115 164 77 Q173 55 191 67 Q180 37 203 28 Q226 22 234 49 Q253 28 269 48 Q285 68 262 89 Q286 102 270 124 Q256 141 232 131 L221 170Z" stroke="#d86cae" stroke-opacity=".35" stroke-width="2"/>
-<path d="M189 79 Q204 57 231 68 Q253 75 258 105 Q263 135 242 155 Q223 173 203 151 Q184 132 189 105Z" fill="url(#body)" stroke="#d8c6ef" stroke-width="3"/><path d="M203 78 L197 43 Q214 48 224 73Z" fill="#fff" stroke="#d8c6ef" stroke-width="3"/><path d="M205 66 L203 53 L215 70Z" fill="#ffb3d9"/><path d="M226 76 L237 25 L253 77Z" fill="url(#horn)" stroke="#d5a5e8" stroke-width="2"/>
-<ellipse cx="239" cy="135" rx="22" ry="15" fill="#fff0f8" stroke="#ead5f0" stroke-width="2"/><ellipse cx="220" cy="111" rx="5.5" ry="8" fill="#593d78"/><circle cx="222" cy="108" r="2" fill="#fff"/><ellipse cx="207" cy="130" rx="10" ry="6" fill="#ffb7d7" opacity=".8"/><path d="M238 140 Q246 146 252 139" fill="none" stroke="#a96c99" stroke-width="2.5" stroke-linecap="round"/>
-<path class="mane-shape" d="M78 193 Q51 178 46 196 Q43 211 63 211 Q44 227 59 239 Q79 242 85 220 Q104 217 98 201Z"/><path d="M60 196 Q75 202 65 220 M77 202 Q88 211 72 231" fill="none" stroke="#fff" stroke-width="4" opacity=".6" stroke-linecap="round"/><path d="M88 219 L89 249 Q91 257 104 256 L118 252 L119 218Z M174 221 L176 250 Q183 258 196 252 L202 247 L198 215Z" fill="#fff" stroke="#d8c6ef" stroke-width="3"/><path d="M88 245 L118 245 L117 255 Q102 262 89 255Z M176 245 L201 244 L202 255 Q188 262 177 255Z" fill="#bda0e9" stroke="#a98acb" stroke-width="2"/>
-</svg><div class="accessory" id="accessory"></div></div>
-</section>
-<div class="message" id="message" role="status" aria-live="polite">Hallo, Sternchen! Was machen wir zuerst? 💕</div>
-<section class="panel"><h2>🍎 Futter aufnehmen</h2><p class="hint">Halte ein Futter gedrückt und ziehe es auf das Einhorn.</p><div class="foods"><div class="food" role="button" tabindex="0" data-food="apple"><span class="emoji">🍎</span>Apfel</div><div class="food" role="button" tabindex="0" data-food="carrot"><span class="emoji">🥕</span>Karotte</div></div></section>
-<section class="panel"><h2>🧺 Pflege dein Einhorn</h2><div class="actions">
- <button class="action" data-action="brush"><span>🪮</span>Bürsten</button>
- <button class="action" data-action="wash"><span>🛁</span>Waschen</button>
- <button class="action" data-action="hug"><span>🤗</span>Kuscheln</button>
-</div></section>
-<section class="panel customize">
- <div><h2>🎨 Mähnenfarbe</h2><div class="choices" id="colors">
- <button class="swatch" style="background:linear-gradient(135deg,#ff82c8,#ffc9e8)" data-color="#ff8bc7" aria-label="Rosa" aria-pressed="true"></button>
- <button class="swatch" style="background:linear-gradient(135deg,#ad75ff,#e2b7ff)" data-color="#b67aff" aria-label="Lila" aria-pressed="false"></button>
- <button class="swatch" style="background:linear-gradient(135deg,#62dcff,#a2ffeb)" data-color="#54cce8" aria-label="Blau" aria-pressed="false"></button>
- <button class="swatch" style="background:linear-gradient(135deg,#ffdc62,#ff9e9e)" data-color="#ffbd54" aria-label="Sonnengelb" aria-pressed="false"></button>
- <button class="swatch" style="background:linear-gradient(135deg,#ff8e76,#9af0a2,#a6a2ff)" data-color="rainbow" aria-label="Regenbogen" aria-pressed="false"></button>
- </div></div>
- <div><h2>👑 Accessoires</h2><div class="choices" id="accessories">
- <button class="choice" data-accessory="" aria-pressed="true">Keins</button><button class="choice" data-accessory="👑" aria-pressed="false">👑 Krone</button><button class="choice" data-accessory="🎀" aria-pressed="false">🎀 Schleife</button><button class="choice" data-accessory="🌼" aria-pressed="false">🌼 Blume</button><button class="choice" data-accessory="🕶️" aria-pressed="false">🕶️ Cool</button>
- </div></div>
-</section>
-<button class="action" id="reset" style="min-height:48px">🔄 Neu anfangen</button>
-<footer>Dein Spielstand wird auf diesem Gerät gespeichert, wenn der Browser das erlaubt. 💖</footer>
-</main>
-<script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a href="#world" class="brand" aria-label="Zur Zauberwelt"
+        ><span class="brand-mark">✦</span
+        ><span>Einhorn<span class="brand-sub">ZAUBERWELT</span></span></a
+      >
+      <div class="top-actions">
+        <span class="balance" aria-label="Gesammelte Sterne"
+          ><span>✦</span> <b id="balance">0</b></span
+        ><button
+          id="sound"
+          class="icon-button"
+          aria-label="Ton einschalten"
+          aria-pressed="false"
+        >
+          ♫ <span>Ton aus</span></button
+        ><button
+          id="save-menu"
+          class="icon-button"
+          aria-label="Spielstand speichern oder laden"
+        >
+          ◇ <span>Spielstand</span>
+        </button>
+      </div>
+    </header>
+    <main id="app"></main>
+    <nav id="navigation" aria-label="Spielbereiche">
+      <a href="#world" data-page="world"><span>⌂</span>Zauberwelt</a
+      ><a href="#salon" data-page="salon"><span>✂</span>Salon</a
+      ><a href="#care" data-page="care"><span>♡</span>Pflege</a
+      ><a href="#run" data-page="run"><span>➜</span>Abenteuer</a
+      ><a href="#home" data-page="home"><span>☾</span>Zuhause</a
+      ><a href="#games" data-page="games"><span>✧</span>Minispiele</a>
+    </nav>
+    <div id="toast" role="status" aria-live="polite"></div>
+    <dialog id="modal" aria-labelledby="dialog-title">
+      <div id="modal-content"></div>
+    </dialog>
+    <script>
 (() => {
- const KEY='regenbogen-einhorn-v2';
- const defaults={happiness:70,score:0,mane:'#ff8bc7',accessory:'',kind:'',name:'Sternchen'};let state={...defaults};
- const $=id=>document.getElementById(id);
- function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
- function load(){try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&typeof s==='object')state={...defaults,...s}}catch(e){}}
- function render(){ $('happyText').textContent=state.happiness+' %';$('happyBar').style.width=state.happiness+'%';$('score').textContent=state.score;$('energyBar').style.width=Math.min(100,state.score%101)+'%';$('petNameInput').value=state.name||'';document.querySelectorAll('.mane-shape').forEach(el=>{el.style.fill=state.mane==='rainbow'?'url(#rainbowMane)':state.mane});$('accessory').textContent=state.accessory;$('accessory').className='accessory '+(state.kind||'');document.querySelectorAll('[data-color]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.color===state.mane)));document.querySelectorAll('[data-accessory]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.accessory===state.accessory))); }
- function celebrate(emoji){const el=document.createElement('div');el.className='action-pop';el.textContent=emoji;el.style.left=(25+Math.random()*45)+'%';el.style.top='35%';$('scene').appendChild(el);$('unicornWrap').animate([{transform:'translateY(8px) rotate(0)'},{transform:'translateY(-8px) rotate(-3deg)'},{transform:'translateY(8px) rotate(3deg)'}],{duration:500});setTimeout(()=>el.remove(),850)}
- function care(type){if(state.happiness>=100){$('message').textContent='Ich bin schon rundum glücklich! 💖 Warte, bis ich wieder Pflege brauche.';return}const v={apple:[12,10,'Mmmh, ein knackiger Apfel! 🍎','🍎💖'],carrot:[10,10,'Knusper-knusper! Die Karotte schmeckt toll! 🥕','🥕✨'],brush:[15,8,'Die Mähne glänzt wunderschön! 🪮','✨🩷'],wash:[10,8,'Plitsch-platsch! Jetzt bin ich blitzsauber! 🛁','🫧✨'],hug:[8,5,'Eine kuschelige Umarmung! 💗','💞']}[type];if(!v)return;state.happiness=Math.min(100,state.happiness+v[0]);state.score+=v[1];$('message').textContent=v[2];render();save();celebrate(v[3]);}
- document.querySelectorAll('[data-action]').forEach(b=>b.addEventListener('click',()=>care(b.dataset.action)));
- $('saveName').addEventListener('click',()=>{const typed=$('petNameInput').value.trim();if(!typed){$('message').textContent='Gib deinem Einhorn einen Namen ein. 💖';return}state.name=typed;$('message').textContent='Hallo '+state.name+'! Wie schön, dass es dich gibt! 🌈';save();render();celebrate('💖')});$('petNameInput').addEventListener('keydown',e=>{if(e.key==='Enter')$('saveName').click()});
- document.querySelectorAll('[data-color]').forEach(b=>b.addEventListener('click',()=>{state.mane=b.dataset.color;$('message').textContent='Wow! Die Mähne hat eine neue Zauberfarbe! 🌈';render();save();celebrate('🌈✨')}));
- document.querySelectorAll('[data-accessory]').forEach(b=>b.addEventListener('click',()=>{state.accessory=b.dataset.accessory;state.kind=b.dataset.kind||'';$('message').textContent=state.accessory?'Ein magischer neuer Look! Das steht mir toll! 💖':'Ganz natürlich und wunderschön! ✨';render();save();celebrate(state.accessory||'✨')}));
- document.querySelectorAll('[data-food]').forEach(food=>{food.addEventListener('pointerdown',e=>{e.preventDefault();food.setPointerCapture(e.pointerId);food.dataset.dragging='1';food.classList.add('dragging');food.dataset.x=e.clientX;food.dataset.y=e.clientY});food.addEventListener('pointermove',e=>{if(food.dataset.dragging==='1')food.style.transform=`translate(${e.clientX-Number(food.dataset.x)}px,${e.clientY-Number(food.dataset.y)}px) scale(1.08)`});const finish=e=>{if(food.dataset.dragging!=='1')return;food.dataset.dragging='0';food.classList.remove('dragging');food.style.transform='';const r=$('scene').getBoundingClientRect();if(e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom)care(food.dataset.food);else $('message').textContent='Zieh das Futter direkt auf das Einhorn, dann kann es essen! 🍎🥕'};food.addEventListener('pointerup',finish);food.addEventListener('pointercancel',finish);food.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();care(food.dataset.food)}})});
- $('reset').addEventListener('click',()=>{state={...defaults};$('message').textContent='Ein frischer Zauber! Dein Abenteuer beginnt von vorn! 🌟';render();save();celebrate('🌟')});load();render();$('message').textContent='Hallo '+(state.name||'Sternchen')+'! Zieh einen Apfel oder eine Karotte zu mir! 💕';
+const KEY = "einhorn-zauberwelt-v1";
+const palette = [
+  "#fff7ee",
+  "#f6c6dc",
+  "#cbb9ee",
+  "#a7dce2",
+  "#f5d38d",
+  "#a9d6b4",
+];
+const hairColors = [
+  "#b28ade",
+  "#e892b9",
+  "#66b9cf",
+  "#e8b65c",
+  "#87bf98",
+  "rainbow",
+];
+const accessories = {
+  none: { name: "Ohne", price: 0 },
+  bow: { name: "Schleife", price: 0 },
+  flower: { name: "Blume", price: 0 },
+  crown: { name: "Sternenkrone", price: 20 },
+  glasses: { name: "Sonnenbrille", price: 15 },
+  necklace: { name: "Halskette", price: 12 },
+  wings: { name: "Zauberflügel", price: 35 },
+};
+const furniture = {
+  rug: { name: "Blumenteppich", price: 12 },
+  plant: { name: "Zauberpflanze", price: 18 },
+  lamp: { name: "Sternenlampe", price: 25 },
+  picture: { name: "Regenbogenbild", price: 15 },
+};
+function fresh() {
+  return {
+    version: 1,
+    name: "Sternchen",
+    stars: 0,
+    look: {
+      coat: palette[0],
+      mane: hairColors[0],
+      tail: hairColors[0],
+      style: "waves",
+      pattern: "none",
+      accessory: "bow",
+    },
+    owned: ["none", "bow", "flower", "waves", "short", "none-pattern", "spots"],
+    needs: { hunger: 65, clean: 75, love: 70, rest: 80 },
+    home: [],
+    garden: [null, null, null],
+    progress: { run: 0, flight: 0, memory: 0, harvests: 0 },
+    sound: false,
+    started: false,
+  };
+}
+function validate(s) {
+  const fail = () => {
+    throw new Error(
+      "Dieser Spielstand ist unvollständig oder beschädigt. Bitte kopiere den ganzen Code.",
+    );
+  };
+  const num = (v, max = 100000000) =>
+    Number.isSafeInteger(v) && v >= 0 && v <= max;
+  if (
+    !s ||
+    s.version !== 1 ||
+    typeof s.name !== "string" ||
+    !s.name.trim() ||
+    s.name.length > 24 ||
+    !num(s.stars) ||
+    typeof s.sound !== "boolean" ||
+    typeof s.started !== "boolean"
+  )
+    fail();
+  if (
+    !s.look ||
+    !palette.includes(s.look.coat) ||
+    !hairColors.includes(s.look.mane) ||
+    !hairColors.includes(s.look.tail) ||
+    !["waves", "short", "braid"].includes(s.look.style) ||
+    !["none", "spots", "sparkles"].includes(s.look.pattern) ||
+    !Object.hasOwn(accessories, s.look.accessory)
+  )
+    fail();
+  const items = [
+    ...Object.keys(accessories),
+    "waves",
+    "short",
+    "braid",
+    "none-pattern",
+    "spots",
+    "sparkles",
+  ];
+  if (
+    !Array.isArray(s.owned) ||
+    s.owned.length > items.length ||
+    new Set(s.owned).size !== s.owned.length ||
+    s.owned.some((x) => !items.includes(x)) ||
+    !["none", "bow", "flower", "waves", "short", "none-pattern", "spots"].every(
+      (x) => s.owned.includes(x),
+    ) ||
+    !s.owned.includes(s.look.accessory) ||
+    !s.owned.includes(s.look.style) ||
+    (s.look.pattern !== "none" && !s.owned.includes(s.look.pattern))
+  )
+    fail();
+  if (
+    !s.needs ||
+    !["hunger", "clean", "love", "rest"].every((k) => num(s.needs[k], 100))
+  )
+    fail();
+  if (
+    !Array.isArray(s.home) ||
+    s.home.length > 4 ||
+    new Set(s.home).size !== s.home.length ||
+    s.home.some((k) => !Object.hasOwn(furniture, k))
+  )
+    fail();
+  if (
+    !s.progress ||
+    !["run", "flight", "memory", "harvests"].every((k) => num(s.progress[k]))
+  )
+    fail();
+  if (
+    !Array.isArray(s.garden) ||
+    s.garden.length !== 3 ||
+    s.garden.some(
+      (p) =>
+        p !== null &&
+        (!p ||
+          !["rose", "daisy", "lavender"].includes(p.kind) ||
+          !num(p.stage, 2) ||
+          !num(p.readyAt, 9007199254740991)),
+    )
+  )
+    fail();
+  // Return only known fields; imported data never adds arbitrary application properties.
+  return {
+    version: 1,
+    name: s.name.trim(),
+    stars: s.stars,
+    look: {
+      coat: s.look.coat,
+      mane: s.look.mane,
+      tail: s.look.tail,
+      style: s.look.style,
+      pattern: s.look.pattern,
+      accessory: s.look.accessory,
+    },
+    owned: [...s.owned],
+    needs: {
+      hunger: s.needs.hunger,
+      clean: s.needs.clean,
+      love: s.needs.love,
+      rest: s.needs.rest,
+    },
+    home: [...s.home],
+    garden: s.garden.map((p) =>
+      p ? { kind: p.kind, stage: p.stage, readyAt: p.readyAt } : null,
+    ),
+    progress: {
+      run: s.progress.run,
+      flight: s.progress.flight,
+      memory: s.progress.memory,
+      harvests: s.progress.harvests,
+    },
+    sound: s.sound,
+    started: s.started,
+  };
+}
+function loadLocal() {
+  try {
+    const raw = localStorage.getItem(KEY);
+    if (raw) return validate(JSON.parse(raw));
+    const old = JSON.parse(
+      localStorage.getItem("regenbogen-einhorn-v2") || "null",
+    );
+    if (old) {
+      const s = fresh();
+      if (typeof old.name === "string")
+        s.name = old.name.trim().slice(0, 24) || "Sternchen";
+      s.started = true;
+      return s;
+    }
+  } catch {}
+  return fresh();
+}
+function store(s) {
+  try {
+    localStorage.setItem(KEY, JSON.stringify(s));
+    return true;
+  } catch {
+    return false;
+  }
+}
+function checksum(text) {
+  let crc = 0xffffffff;
+  for (const c of new TextEncoder().encode(text)) {
+    crc ^= c;
+    for (let i = 0; i < 8; i++) crc = (crc >>> 1) ^ (crc & 1 ? 0xedb88320 : 0);
+  }
+  return ((crc ^ 0xffffffff) >>> 0).toString(16).padStart(8, "0");
+}
+function encode(s) {
+  const v = validate(s);
+  const compact = [
+    v.name,
+    v.stars,
+    Object.values(v.look),
+    v.owned,
+    Object.values(v.needs),
+    v.home,
+    v.garden.map((p) => (p ? [p.kind, p.stage, p.readyAt] : null)),
+    Object.values(v.progress),
+    v.sound ? 1 : 0,
+    v.started ? 1 : 0,
+  ];
+  const json = JSON.stringify(compact);
+  const bytes = new TextEncoder().encode(json);
+  let binary = "";
+  for (const b of bytes) binary += String.fromCharCode(b);
+  return `EZ1.${btoa(binary).replaceAll("+", "-").replaceAll("/", "_").replace(/=+$/, "")}.${checksum(json)}`;
+}
+function decode(code) {
+  try {
+    const c = code.trim();
+    if (c.length > 10000) throw Error();
+    const parts = c.split(".");
+    if (
+      parts[0] !== "EZ1" ||
+      parts.length !== 3 ||
+      !/^[A-Za-z0-9_-]+$/.test(parts[1]) ||
+      !/^[a-f0-9]{8}$/.test(parts[2])
+    )
+      throw Error();
+    const bytes = Uint8Array.from(
+      atob(parts[1].replaceAll("-", "+").replaceAll("_", "/")),
+      (c) => c.charCodeAt(0),
+    );
+    const json = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+    if (checksum(json) !== parts[2]) throw Error();
+    const a = JSON.parse(json);
+    if (
+      !Array.isArray(a) ||
+      a.length !== 10 ||
+      ![0, 1].includes(a[8]) ||
+      ![0, 1].includes(a[9])
+    )
+      throw Error();
+    return validate({
+      version: 1,
+      name: a[0],
+      stars: a[1],
+      look: Object.fromEntries(
+        ["coat", "mane", "tail", "style", "pattern", "accessory"].map(
+          (k, i) => [k, a[2][i]],
+        ),
+      ),
+      owned: a[3],
+      needs: Object.fromEntries(
+        ["hunger", "clean", "love", "rest"].map((k, i) => [k, a[4][i]]),
+      ),
+      home: a[5],
+      garden: a[6].map((p) =>
+        p ? { kind: p[0], stage: p[1], readyAt: p[2] } : null,
+      ),
+      progress: Object.fromEntries(
+        ["run", "flight", "memory", "harvests"].map((k, i) => [k, a[7][i]]),
+      ),
+      sound: !!a[8],
+      started: !!a[9],
+    });
+  } catch {
+    throw new Error(
+      "Der Code ist ungültig oder beschädigt. Bitte prüfe, ob du ihn vollständig kopiert hast.",
+    );
+  }
+}
+
+let serial = 0;
+function unicorn(look, { sleep = false, pose = "", id = "" } = {}) {
+  const uid = "pony" + ++serial,
+    hair = (c) => (c === "rainbow" ? `url(#${uid}rainbow)` : c);
+  const extras = {
+    bow: '<g transform="translate(217 65) rotate(15)"><path d="M0 0Q-36-31-28 6Q-23 23 0 5Q26 27 30 4Q35-25 0 0" fill="#e890b6" stroke="#a65b89" stroke-width="2"/><circle r="7" fill="#f6cf94"/></g>',
+    flower:
+      '<g transform="translate(220 65)">' +
+      [0, 72, 144, 216, 288]
+        .map(
+          (a) =>
+            `<ellipse cy="-11" rx="8" ry="12" transform="rotate(${a})" fill="#fff2d2" stroke="#dfb9b5"/>`,
+        )
+        .join("") +
+      '<circle r="6" fill="#eab963"/></g>',
+    crown:
+      '<path d="M182 56L174 26L193 37L205 13L218 37L237 25L229 58Z" fill="#f4cf73" stroke="#b68b45" stroke-width="2.5"/><path d="M187 50L225 50" stroke="#fff4bd" stroke-width="4"/><circle cx="205" cy="40" r="5" fill="#df96c4"/>',
+    glasses:
+      '<g stroke="#62517e" stroke-width="4" fill="#746596"><path d="M198 92Q211 87 222 94L218 109Q203 113 199 102ZM228 94Q242 89 253 95L248 109Q234 113 230 102Z"/><path d="M222 96H230M193 92L180 87" fill="none"/><path d="M203 95L213 105M235 95L244 104" stroke="#d4f1f1" stroke-width="2"/></g>',
+    necklace:
+      '<path d="M180 141Q200 164 219 146" stroke="#dbb45f" stroke-width="5" fill="none"/><path d="M198 156l-5 9 9 8 9-8-5-9Z" fill="#83c9c7" stroke="#599f9f" stroke-width="2"/>',
+    wings:
+      '<g fill="#ede3ff" stroke="#b69ace" stroke-width="2.5"><path d="M140 158Q79 154 67 87Q83 82 106 114Q84 66 99 55Q120 63 131 111Q132 75 145 75Q166 107 149 149Z"/><path d="M139 146Q114 122 101 97M144 142Q139 115 139 101" fill="none"/></g>',
+    none: "",
+  };
+  const mane =
+    look.style === "short"
+      ? "M184 65Q148 51 150 100L164 126L171 97Q187 104 190 76Q218 91 231 75Q216 42 184 65Z"
+      : look.style === "braid"
+        ? "M184 65Q153 47 149 84Q149 106 166 108Q146 120 158 135Q145 146 161 159Q148 176 170 183Q187 172 176 157Q190 143 177 130Q190 112 175 101Q192 103 192 78Q216 92 231 75Q217 43 184 65Z"
+        : "M184 65Q149 40 142 77Q136 100 153 114Q131 121 143 144Q128 166 149 181Q163 198 187 178Q165 169 175 151Q187 130 170 112Q191 108 192 78Q217 94 232 75Q220 44 184 65Z";
+  return `<svg ${id ? `id="${id}"` : ""} class="pony ${pose} ${sleep ? "sleeping" : ""}" viewBox="0 0 320 280" role="img" aria-label="Dein Einhorn"><defs><linearGradient id="${uid}rainbow" x2="0" y2="1"><stop stop-color="#eaa3bd"/><stop offset=".35" stop-color="#f2d28c"/><stop offset=".65" stop-color="#9bced1"/><stop offset="1" stop-color="#b39ad7"/></linearGradient><linearGradient id="${uid}horn" x2=".8" y2="1"><stop stop-color="#fff1be"/><stop offset="1" stop-color="#d2addf"/></linearGradient></defs><ellipse cx="159" cy="251" rx="105" ry="10" fill="#70618c" opacity=".12"/><g class="pony-body"><g class="tail" style="transform-origin:94px 166px"><path d="M98 156Q52 115 36 161Q28 188 48 200Q20 222 53 233Q85 245 81 209Q65 187 104 181Z" fill="${hair(look.tail)}" stroke="#8f75a7" stroke-width="2.5"/><path d="M56 164Q41 185 63 201Q79 222 54 225" fill="none" stroke="#fff" opacity=".35" stroke-width="5" stroke-linecap="round"/></g><g fill="${look.coat}" stroke="#bca7c6" stroke-width="2.5" stroke-linejoin="round"><path d="M102 192L100 241Q105 252 120 246L131 204M171 199L180 242Q188 252 201 243L201 191" fill="#e6d7e5"/><path d="M91 163Q116 131 173 153Q181 123 182 111Q172 92 178 77Q171 55 184 43Q199 47 205 67Q225 67 239 84Q246 99 238 113L260 120Q275 136 258 147Q245 158 220 147Q220 179 200 196Q171 216 132 207L130 240Q126 254 109 247L107 207Q79 196 91 163Z"/><path d="M204 69L208 40L220 67" fill="#f1c9db"/></g><path d="M216 71L231 34L237 77Z" fill="url(#${uid}horn)" stroke="#b89cc4" stroke-width="2"/><path d="M224 52L233 57M220 63L235 69" stroke="#bca5d2" stroke-width="2"/><g class="ear" style="transform-origin:185px 71px"><path d="M182 71Q162 30 177 27Q197 39 198 70" fill="${look.coat}" stroke="#bca7c6" stroke-width="2.5"/><path d="M182 56L178 40Q188 45 190 59" fill="#e9bacf"/></g><path d="${mane}" fill="${hair(look.mane)}" stroke="#8f75a7" stroke-width="2.5"/><path d="M160 70Q148 87 164 103" stroke="#fff" opacity=".35" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M108 239H130L129 246Q119 254 108 247ZM180 238H202L202 245Q191 252 181 246Z" fill="#baa1cc"/><ellipse cx="239" cy="126" rx="13" ry="8" fill="#ecc0cd" opacity=".65"/><circle cx="259" cy="130" r="2.5" fill="#99718b"/><path class="mouth" d="M244 140Q251 145 258 139" fill="none" stroke="#99718b" stroke-width="2.5" stroke-linecap="round"/><g class="eyes">${sleep ? '<path d="M204 102Q213 109 222 100" stroke="#66506e" stroke-width="3" fill="none"/>' : '<ellipse cx="212" cy="101" rx="8" ry="11" fill="#5c486b"/><ellipse cx="214" cy="97" rx="3" ry="4" fill="white"/><path d="M205 94L201 90" stroke="#5c486b" stroke-width="2.5" stroke-linecap="round"/>'}</g>${look.pattern === "spots" ? '<g fill="#d6a6ca" opacity=".6"><circle cx="116" cy="177" r="9"/><circle cx="143" cy="184" r="7"/><circle cx="129" cy="163" r="5"/></g>' : look.pattern === "sparkles" ? '<g fill="#dfb95f"><path d="M122 162l4 10 10 4-10 4-4 10-4-10-10-4 10-4ZM153 184l3 6 6 3-6 3-3 6-3-6-6-3 6-3Z"/></g>' : ""}${extras[look.accessory] || ""}</g></svg>`;
+}
+function landscape() {
+  return `<svg class="landscape" viewBox="0 0 1200 580" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#dce9f4"/><stop offset="1" stop-color="#f6e9f0"/></linearGradient><linearGradient id="hill" x2="0" y2="1"><stop stop-color="#afcfba"/><stop offset="1" stop-color="#d2dec1"/></linearGradient></defs><path fill="url(#sky)" d="M0 0H1200V580H0Z"/><circle cx="986" cy="95" r="43" fill="#fff2cf"/><g fill="none" stroke-width="14" opacity=".48"><path d="M268 330A270 270 0 0 1 808 330" stroke="#e7a9bc"/><path d="M282 330A256 256 0 0 1 794 330" stroke="#f1cd9a"/><path d="M296 330A242 242 0 0 1 780 330" stroke="#d6dfb2"/><path d="M310 330A228 228 0 0 1 766 330" stroke="#b2d4db"/><path d="M324 330A214 214 0 0 1 752 330" stroke="#c5b6d8"/></g><g class="sky-cloud" fill="#fff" opacity=".8"><path d="M82 114Q58 83 86 71Q94 42 123 58Q147 37 165 62Q198 61 194 87Q212 111 185 115Z"/><path d="M831 145Q807 117 835 105Q843 76 872 92Q896 71 914 96Q947 95 943 121Q961 145 934 149Z"/></g><path d="M0 363Q160 211 350 338Q505 211 708 332Q982 191 1200 326V580H0Z" fill="#c0d7cb"/><path d="M0 399Q206 312 434 404Q644 299 870 388Q1053 294 1200 372V580H0Z" fill="url(#hill)"/><path d="M0 489Q310 392 556 473Q879 376 1200 457V580H0Z" fill="#d7dfbf"/><path d="M647 380Q553 438 600 580H825Q662 452 710 380Z" fill="#f3e3ca" opacity=".9"/>
+<g transform="translate(870 175)"><path d="M-30 164H145V80H-30Z" fill="#eae3e9"/><path d="M-47 79L1 20L48 79M70 80L113 15L159 80" fill="#bda4cd" stroke="#9e87b4" stroke-width="3"/><path d="M-21 80H27V165H-21ZM88 80H135V165H88Z" fill="#f9edeb"/><path d="M35 164V48H83V164" fill="#fff2e8"/><path d="M22 48L59-8L96 48" fill="#c3a4d4"/><path d="M59-8V-38L91-26L59-18" fill="#e7a0b5"/><path d="M43 165V130Q60 105 77 130V165" fill="#ab91ba"/><g fill="#9fbac8"><path d="M-9 101Q3 84 14 101V118H-9ZM99 101Q111 84 123 101V118H99ZM49 65Q60 51 70 65V83H49Z"/></g></g>
+<g fill="#869f9c"><path d="M70 410l40-93 41 93Z"/><path d="M105 412l40-112 42 112Z"/><path d="M1091 415l40-107 44 107Z"/></g><g stroke="#8caa91" stroke-width="3">${[80, 160, 240, 320, 900, 980, 1090, 1140, 430, 780].map((x, i) => `<g transform="translate(${x} ${480 + (i % 3) * 30})"><path d="M0 0V25M0 15L-10 8"/><g fill="${i % 2 ? "#e9b6ca" : "#fff4db"}" stroke="none"><ellipse cy="-7" rx="5" ry="9"/><ellipse cy="-7" rx="5" ry="9" transform="rotate(72)"/><ellipse cy="-7" rx="5" ry="9" transform="rotate(144)"/><ellipse cy="-7" rx="5" ry="9" transform="rotate(216)"/><ellipse cy="-7" rx="5" ry="9" transform="rotate(288)"/><circle r="4" fill="#d9b36e"/></g></g>`).join("")}</g></svg>`;
+}
+const foodArt = {
+  apple:
+    '<path d="M23 14Q4 3 5 25Q7 45 23 39Q41 46 43 25Q44 5 25 14" fill="#dd7d89"/><path d="M24 15V5M24 8Q34-1 39 7Q32 14 24 10" fill="#89b087" stroke="#739374" stroke-width="3"/><path d="M12 21Q10 28 15 31" fill="none" stroke="#f8c3c6" stroke-width="3"/>',
+  carrot:
+    '<path d="M14 14L37 20L15 45Q6 49 9 38Z" fill="#e8a15e"/><path d="M23 17L19 3M25 17L33 4M28 17L43 11" stroke="#86ad85" stroke-width="5"/><path d="M15 25L22 28M12 34L17 36" stroke="#c37c49" stroke-width="2"/>',
+  berry:
+    '<path d="M9 16Q24 7 40 17Q38 33 25 44Q11 34 9 16" fill="#d77b98"/><path d="M15 16L10 6L23 10L30 3L32 12L43 9L37 20L24 15Z" fill="#8eb392"/><g fill="#ffe3a9"><circle cx="18" cy="23" r="2"/><circle cx="29" cy="24" r="2"/><circle cx="24" cy="33" r="2"/></g>',
+  sugar:
+    '<path d="M7 17L25 7L43 17V37L25 46L7 36Z" fill="#fff7ec" stroke="#d5bed8" stroke-width="2"/><path d="M7 17L25 27L43 17M25 27V46" fill="none" stroke="#d5bed8" stroke-width="2"/>',
+  magic:
+    '<path d="M25 3L31 17L46 19L35 30L38 46L25 38L11 46L14 30L3 19L19 17Z" fill="#c5a4de" stroke="#9e7dbc" stroke-width="2"/><path d="M25 12L28 22L38 23" stroke="#f7e5ff" fill="none" stroke-width="3"/>',
+};
+function foodIcon(kind) {
+  return `<svg viewBox="0 0 50 50" aria-hidden="true">${foodArt[kind]}</svg>`;
+}
+function flower(kind, stage) {
+  const color = { rose: "#d990ae", daisy: "#fff0cd", lavender: "#b29bd6" }[
+    kind
+  ];
+  return `<svg viewBox="0 0 100 120" aria-hidden="true"><path d="M50 103V${stage === 0 ? 73 : 40}M50 84Q25 61 22 83Q33 95 50 89M50 71Q76 50 79 71Q67 83 50 79" fill="#8db692" stroke="#719b7b" stroke-width="3"/>${stage > 0 ? `<g transform="translate(50 40) scale(${stage === 1 ? 0.6 : 1})">${[0, 60, 120, 180, 240, 300].map((a) => `<ellipse cy="-15" rx="12" ry="19" transform="rotate(${a})" fill="${color}" stroke="#a288ac" stroke-width="1"/>`).join("")}<circle r="10" fill="#dfb66a"/></g>` : ""}<ellipse cx="50" cy="106" rx="35" ry="7" fill="#9a7e74" opacity=".25"/></svg>`;
+}
+
+function careTool(kind) {
+ const shape=kind==='brush'?`<g transform="rotate(-25 50 50)"><path d="M40 52H60V91Q50 102 40 91Z" fill="#c9a5d8" stroke="#87669f" stroke-width="3"/><path d="M22 20H78V54H22Z" rx="8" fill="#edc694" stroke="#af895b" stroke-width="3"/>${[28,37,46,55,64,73].map(x=>`<path d="M${x} 18V6" stroke="#8d758e" stroke-width="5" stroke-linecap="round"/>`).join('')}<rect x="25" y="24" width="50" height="23" rx="8" fill="#f8ddb7"/></g>`:`<g transform="rotate(-15 50 50)"><rect x="12" y="25" width="76" height="53" rx="17" fill="#eed17e" stroke="#b9994f" stroke-width="3"/><path d="M15 61Q50 77 85 61V70Q81 86 62 84H30Q13 82 15 61" fill="#d9b363"/>${[[28,38],[51,48],[70,37],[34,61],[70,61]].map(([x,y])=>`<ellipse cx="${x}" cy="${y}" rx="5" ry="3" fill="#c8a658"/>`).join('')}<g fill="#e8f7ff" stroke="#a9cfdd" stroke-width="2"><circle cx="21" cy="18" r="10"/><circle cx="40" cy="13" r="7"/><circle cx="80" cy="17" r="12"/></g></g>`;
+ return `<svg viewBox="0 0 100 110" aria-hidden="true">${shape}</svg>`;
+}
+const animalNames={pony:'Pony',cat:'Katze',dog:'Hund',rabbit:'Hase',fox:'Fuchs',bear:'Bär'};
+function animalPicture(kind){
+ const colors={pony:['#ebd3b1','#bc8dce'],cat:['#e8b580','#b77f55'],dog:['#dfbd95','#a77f61'],rabbit:['#eee1ea','#d8a9bd'],fox:['#e3a16c','#b87550'],bear:['#bf987b','#8b6855']};
+ const [coat,accent]=colors[kind];
+ const ears=kind==='rabbit'?'<ellipse cx="34" cy="29" rx="12" ry="27"/><ellipse cx="68" cy="29" rx="12" ry="27"/>':kind==='cat'||kind==='fox'?'<path d="M18 52L15 12L46 35M57 35L86 12L84 55"/>':kind==='dog'?'<ellipse cx="20" cy="53" rx="14" ry="28"/><ellipse cx="82" cy="53" rx="14" ry="28"/>':kind==='pony'?'<path d="M23 46Q8 6 26 12L44 37M60 37Q79 6 83 16L78 48"/>':'<circle cx="23" cy="32" r="17"/><circle cx="77" cy="32" r="17"/>';
+ return `<svg viewBox="0 0 100 110" role="img" aria-label="${animalNames[kind]}"><ellipse cx="50" cy="100" rx="34" ry="6" fill="#cabbd5" opacity=".25"/><g fill="${coat}" stroke="${accent}" stroke-width="2.5" stroke-linejoin="round">${ears}<path d="M16 59Q13 30 49 29Q87 28 85 60L83 75Q76 96 50 96Q22 96 17 77Z"/></g>${kind==='pony'?`<path d="M29 35Q37 13 64 28Q82 31 75 48Q64 36 52 43Q42 55 30 50Z" fill="${accent}"/><ellipse cx="50" cy="79" rx="25" ry="15" fill="#f4e5d0"/>`:''}${kind==='fox'?'<path d="M18 65L49 80L82 65Q78 92 50 95Q23 92 18 65" fill="#fff0d9"/>':''}${kind==='dog'||kind==='bear'?'<ellipse cx="50" cy="77" rx="22" ry="16" fill="#f4e1c9"/>':''}<g fill="#594559"><ellipse cx="34" cy="59" rx="5" ry="7"/><ellipse cx="67" cy="59" rx="5" ry="7"/></g><g fill="white"><circle cx="35" cy="57" r="2"/><circle cx="68" cy="57" r="2"/></g><g fill="#dc98ad" opacity=".65"><ellipse cx="25" cy="74" rx="7" ry="4"/><ellipse cx="76" cy="74" rx="7" ry="4"/></g><path d="M45 75Q50 71 56 75L50 81Z" fill="#876277"/><path d="M50 81V84M50 84Q41 90 39 82M50 84Q59 90 62 82" fill="none" stroke="#876277" stroke-width="2" stroke-linecap="round"/>${kind==='cat'?'<path d="M23 77L5 73M23 82L5 84M77 77L95 73M77 82L95 84" stroke="#876277" stroke-width="1.5"/>':''}</svg>`;
+}
+
+let context,
+  enabled = false,
+  next = 0;
+function setAudio(on) {
+  enabled = on;
+  if (on) {
+    try {
+      context ??= new (window.AudioContext || window.webkitAudioContext)();
+      context.resume();
+    } catch {
+      enabled = false;
+    }
+  }
+  return enabled;
+}
+function tone(kind = "tap") {
+  if (!enabled || !context) return;
+  const notes = {
+    tap: [523],
+    star: [784, 1047],
+    happy: [523, 659, 784],
+    sleep: [392, 330],
+    error: [294, 262],
+  }[kind] || [523];
+  notes.forEach((f, i) => {
+    const o = context.createOscillator(),
+      g = context.createGain(),
+      at = context.currentTime + i * 0.11;
+    o.type = "sine";
+    o.frequency.value = f;
+    g.gain.setValueAtTime(0, at);
+    g.gain.linearRampToValueAtTime(0.055, at + 0.015);
+    g.gain.exponentialRampToValueAtTime(0.001, at + 0.25);
+    o.connect(g);
+    g.connect(context.destination);
+    o.start(at);
+    o.stop(at + 0.26);
+  });
+}
+function ambience(now) {
+  if (!enabled || now < next) return;
+  next = now + 4800;
+  tone("sleep");
+}
+
+function mountRunner(root, { state, save, reward, flight = false }) {
+  const maxLevel = 3,
+    unlocked = Math.min(
+      maxLevel,
+      state.progress[flight ? "flight" : "run"] + 1,
+    );
+  let selected = unlocked,
+    active = false,
+    paused = false,
+    raf = 0,
+    last = 0,
+    elapsed = 0,
+    spawn = 0,
+    invulnerable = 0,    playerY = 0,
+    velocity = 0,
+    points = 0,
+    lives = 3,
+    items = [],
+    finished = false,
+    holding = false;
+  const title = flight ? "Wolkenflug" : "Sternenpfad",
+    duration = 32;
+  root.innerHTML = `<div class="game-shell"><div class="game-stage" tabindex="0" role="application" aria-label="${title}. ${flight ? "Leertaste gedrückt halten zum Steigen, loslassen zum Sinken." : "Leertaste zum Springen."}"><div class="scenery">${landscape()}</div>${flight ? "" : '<div class="game-ground"></div>'}<div class="game-player">${unicorn(state.look)}</div><div class="game-hud"><span class="pill" id="run-score">✦ 0</span><span class="pill" id="run-time">Level ${selected}</span><button id="pause-game" aria-label="Spiel pausieren" hidden>Pause</button></div><div class="game-overlay"></div></div><div class="game-controls"><p>${flight ? "Halte die Taste oder den Knopf zum Steigen. Loslassen zum Sinken." : "Springe über Zaubersteine und sammle Sterne. Leertaste, Pfeil nach oben oder tippen."}</p><button class="button" id="jump-button">${flight ? "↑ Fliegen" : "↑ Springen"}</button></div></div><div class="instructions"><span>${flight ? "Wolken ausweichen" : "3 Herzen pro Versuch"}</span><span>3 zauberhafte Level</span><span>Gesammelte Sterne gehören dir</span></div><p class="game-notice" id="game-result" role="status"></p>`;
+  const stage = root.querySelector(".game-stage"),
+    player = root.querySelector(".game-player"),
+    overlay = root.querySelector(".game-overlay"),
+    score = root.querySelector("#run-score"),
+    time = root.querySelector("#run-time"),
+    pause = root.querySelector("#pause-game"),
+    jumpButton = root.querySelector("#jump-button");
+  function intro() {
+    overlay.hidden = false;
+    overlay.style.display = "flex";
+    overlay.innerHTML = `<div class="eyebrow">DEIN KLEINES ABENTEUER</div><h2>${title}</h2><p>${flight ? "Über den Wolken warten funkelnde Sterne. Fliege sanft hoch und runter und umfliege die grauen Wolken." : "Ein Regenbogenweg voller Sterne! Springe über die Zaubersteine und finde die magischen Kristalle."}</p><div class="row" style="margin-bottom:20px">${[1, 2, 3].map((n) => `<button class="chip" data-level="${n}" aria-pressed="${n === selected}" ${n > unlocked ? "disabled" : ""}>Level ${n}${n > unlocked ? " · gesperrt" : ""}</button>`).join("")}</div><button class="button" id="start-game">Los geht’s →</button>`;
+    overlay.querySelectorAll("[data-level]").forEach(
+      (b) =>
+        (b.onclick = () => {
+          selected = +b.dataset.level;
+          intro();
+        }),
+    );
+    overlay.querySelector("#start-game").onclick = start;
+  }
+  function clear() {
+    items.forEach((i) => i.el.remove());
+    items = [];
+  }
+  function start() {
+    cancelAnimationFrame(raf);
+    clear();
+    elapsed = 0;
+    spawn = 0.8;
+    points = 0;
+    lives = 3;
+    velocity = 0;
+    playerY = flight ? 130 : 0;
+    last = 0;
+    invulnerable = 0;
+    finished = false;
+    active = true;
+    paused = false;
+    holding = false;
+    overlay.hidden = true;
+    overlay.style.display = "none";
+    stage.dataset.level = String(selected);
+    pause.hidden = false;
+    pause.textContent = "Pause";
+    pause.setAttribute("aria-label", "Spiel pausieren");
+    root.querySelector("#game-result").textContent = "";
+    stage.focus({ preventScroll: true });
+    updateHud();
+    raf = requestAnimationFrame(tick);
+  }
+  function updateHud() {
+    score.textContent = `✦ ${points} · ${"♡".repeat(lives)}`;
+    time.textContent = `Level ${selected} · ${Math.ceil(Math.max(0, duration - elapsed))} s`;
+  }
+  function finish(success) {
+    if (finished) return;
+    finished = true;
+    active = false;
+    holding = false;
+    cancelAnimationFrame(raf);
+    clear();
+    pause.hidden = true;
+    if (success) {
+      state.progress[flight ? "flight" : "run"] = Math.max(
+        state.progress[flight ? "flight" : "run"],
+        selected,
+      );
+      state.needs.rest = Math.max(20, state.needs.rest - 8);
+      state.needs.hunger = Math.max(20, state.needs.hunger - 8);
+      save();
+    }
+    reward(points);
+    overlay.hidden = false;
+    overlay.style.display = "flex";
+    overlay.innerHTML = `<div class="dialog-star">${success ? "✦" : "♡"}</div><h2>${success ? "Zauberhaft geschafft!" : "Ein neuer Versuch wartet"}</h2><p>${success ? "Du hast das Ziel erreicht." : "Die Zaubersteine waren knifflig. Du kannst es in Ruhe noch einmal versuchen."}<br>Du hast <strong>${points} Sterne</strong> gesammelt.</p><div class="row"><button class="button" id="retry-game">${success && selected < maxLevel ? "Nächstes Level" : "Noch einmal"}</button><a class="button secondary" href="#world">Zur Zauberwelt</a></div>`;
+    root.querySelector("#game-result").textContent =
+      `${success ? "Ziel erreicht!" : "Versuch beendet."} ${points} Sterne gesammelt.`;
+    overlay.querySelector("#retry-game").onclick = () => {
+      if (success && selected < maxLevel) selected++;
+      start();
+    };
+    tone(success ? "happy" : "sleep");
+  }
+  function action() {
+    if (!active || paused) return;
+    if (flight) {
+      holding = true;
+    } else if (playerY <= 0.01) {
+      velocity = 540;
+      tone("tap");
+    }
+  }
+  function spawnItem(kind, x, y) {
+    const el = document.createElement("div");
+    el.className = `game-item ${kind}`;
+    el.setAttribute("aria-hidden", "true");
+    el.textContent = kind === "star" ? "✦" : kind === "charm" ? "◆" : "";
+    stage.append(el);
+    items.push({ kind, x, y, el });
+  }
+  function tick(now) {
+    if (!active || paused) return;
+    const dt = last ? Math.min((now - last) / 1000, 0.04) : 0;
+    last = now;
+    elapsed += dt;
+    spawn -= dt;
+    invulnerable = Math.max(0, invulnerable - dt);
+    const width = stage.clientWidth,
+      height = stage.clientHeight,
+      base = flight ? 25 : 70,
+      ph = player.clientHeight,
+      pw = player.clientWidth,
+      px = player.offsetLeft;
+    if (flight) {
+      velocity += (holding ? 600 : -420) * dt;
+      velocity = Math.max(-190, Math.min(190, velocity));
+      playerY = Math.max(
+        0,
+        Math.min(height - ph - base - 12, playerY + velocity * dt),
+      );
+      if (playerY === 0 || playerY >= height - ph - base - 12) velocity = 0;
+    } else {
+      velocity -= 1400 * dt;
+      playerY = Math.max(0, playerY + velocity * dt);
+      if (playerY === 0) velocity = 0;
+    }
+    stage.querySelector(".scenery").style.transform =
+      `translateX(${-elapsed * 2}px)`;
+    const ground = stage.querySelector(".game-ground");
+    if (ground) ground.style.backgroundPosition = `${-elapsed * 45}px 0`;
+    player.style.bottom = base + "px";
+    player.style.transform = `translateY(${-playerY}px) rotate(${flight ? Math.max(-8, Math.min(8, -velocity / 30)) : 0}deg)`;
+    player.style.opacity =
+      invulnerable > 0 ? (Math.floor(now / 100) % 2 ? 0.35 : 1) : 1;
+    if (spawn <= 0) {
+      const kind =
+        Math.floor(elapsed * 10) % 3 === 0
+          ? flight
+            ? "cloud"
+            : "obstacle"
+          : Math.floor(elapsed) % 7 === 0
+            ? "charm"
+            : "star";
+      const y = flight
+        ? 45 + Math.random() * (height - 150)
+        : kind === "obstacle"
+          ? 0
+          : 55 + Math.random() * 55;
+      spawnItem(kind, width + 55, y);
+      spawn = 1.05 - selected * 0.1 + Math.random() * 0.4;
+    }
+    const speed = (width < 600 ? 155 : 205) + selected * 24;
+    for (const item of [...items]) {
+      item.x -= speed * dt;
+      item.el.style.bottom = base + item.y + "px";
+      item.el.style.transform = `translateX(${item.x}px)`;
+      const iw =
+          item.kind === "cloud" ? 80 : item.kind === "obstacle" ? 36 : 32,
+        ih = item.kind === "cloud" ? 52 : item.kind === "obstacle" ? 40 : 32;
+      // Narrower body box keeps the horn, tail and decorative wings forgiving.
+      const left = px + pw * 0.29,
+        right = px + pw * 0.79,
+        bottom = playerY + ph * 0.12,
+        top = playerY + ph * 0.74;
+      if (
+        item.x + iw > left &&
+        item.x < right &&
+        item.y + ih > bottom &&
+        item.y < top
+      ) {
+        if (item.kind === "star" || item.kind === "charm") {
+          points += item.kind === "charm" ? 3 : 1;
+          tone("star");
+          item.x = -100;
+        } else if (invulnerable === 0) {
+          lives--;
+          invulnerable = 1.6;
+          tone("error");
+          item.x = -100;
+          if (lives <= 0) {
+            finish(false);
+            return;
+          }
+        }
+      }
+      if (item.x < -100) {
+        item.el.remove();
+        items.splice(items.indexOf(item), 1);
+      }
+    }
+    updateHud();
+    if (elapsed >= duration) {
+      finish(true);
+      return;
+    }
+    raf = requestAnimationFrame(tick);
+  }
+  function setPaused(value) {
+    if (!active) return;
+    paused = value;
+    holding = false;
+    if (paused) {
+      cancelAnimationFrame(raf);
+      overlay.hidden = false;
+      overlay.style.display = "flex";
+      overlay.innerHTML =
+        '<h2>Eine kleine Pause</h2><p>Dein Abenteuer wartet auf dich.</p><button class="button" id="resume-game">Weiterspielen</button>';
+      overlay.querySelector("#resume-game").onclick = () => setPaused(false);
+      pause.textContent = "▶";
+      pause.setAttribute("aria-label", "Spiel fortsetzen");
+    } else {
+      last = 0;
+      overlay.hidden = true;
+      overlay.style.display = "none";
+      pause.textContent = "Pause";
+      pause.setAttribute("aria-label", "Spiel pausieren");
+      raf = requestAnimationFrame(tick);
+    }
+  }
+  const down = (e) => {
+    if (document.querySelector("dialog[open]")) return;
+    if (
+      e.code !== "Escape" &&
+      e.target instanceof HTMLElement &&
+      e.target.closest("button,a,input,textarea,select") &&
+      e.target !== jumpButton
+    )
+      return;
+    if (["Space", "ArrowUp"].includes(e.code) && !e.repeat && active) {
+      e.preventDefault();
+      action();
+    }
+    if (e.code === "Escape" && active) {
+      e.preventDefault();
+      setPaused(!paused);
+    }
+  };
+  const up = (e) => {
+    if (["Space", "ArrowUp"].includes(e.code)) holding = false;
+  };
+  const pointer = (e) => {
+    if (e.target.closest(".game-overlay, #pause-game")) return;
+    e.preventDefault();
+    action();
+  };
+  const release = () => (holding = false),
+    hidden = () => {
+      if (document.hidden && active && !paused) setPaused(true);
+    };
+  const blur = () => {
+    if (active && !paused) setPaused(true);
+  };
+  stage.addEventListener("pointerdown", pointer);
+  jumpButton.addEventListener("pointerdown", pointer);
+  jumpButton.addEventListener("click", (e) => {
+    if (e.detail === 0) {
+      action();
+      if (flight) setTimeout(release, 200);
+    }
+  });
+  window.addEventListener("pointerup", release);
+  window.addEventListener("pointercancel", release);
+  window.addEventListener("keydown", down);
+  window.addEventListener("keyup", up);
+  window.addEventListener("blur", blur);
+  window.addEventListener("game-modal", blur);
+  document.addEventListener("visibilitychange", hidden);
+  pause.onclick = () => setPaused(!paused);
+  intro();
+  return () => {
+    cancelAnimationFrame(raf);
+    if (active && !finished && points > 0) reward(points);
+    active = false;
+    clear();
+    window.removeEventListener("pointerup", release);
+    window.removeEventListener("pointercancel", release);
+    window.removeEventListener("keydown", down);
+    window.removeEventListener("keyup", up);
+    window.removeEventListener("blur", blur);
+    window.removeEventListener("game-modal", blur);
+    document.removeEventListener("visibilitychange", hidden);
+  };
+}
+function mountMemory(root, { state, save, reward }) {
+  const symbols = Object.keys(animalNames);
+  let cards = [],
+    open = [],
+    matched = 0,
+    moves = 0,
+    locked = false,
+    timer = 0;
+  function start() {
+    clearTimeout(timer);
+    cards = symbols.flatMap((s, i) => [
+      { s, id: i },
+      { s, id: i },
+    ]);
+    for (let i = cards.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [cards[i], cards[j]] = [cards[j], cards[i]];
+    }
+    open = [];
+    matched = 0;
+    moves = 0;
+    locked = false;
+    render();
+  }
+  function render() {
+    root.innerHTML = `<div class="panel"><div class="row between"><div><h2>Das fröhliche Tier-Memory</h2><p class="muted">Finde die sechs Tierpaare: Pony, Katze, Hund und ihre Freunde. Es gibt kein Zeitlimit.</p></div><button class="button secondary" id="memory-new">Neu mischen</button></div><div class="memory-board">${cards.map((c, i) => `<button class="memory-card" data-card="${i}" aria-label="Verdeckte Karte ${i + 1}" aria-pressed="false">✧</button>`).join("")}</div><p class="memory-status" role="status">0 von 6 Paaren · 0 Züge</p></div>`;
+    root.querySelector("#memory-new").onclick = start;
+    root
+      .querySelectorAll("[data-card]")
+      .forEach((b) => (b.onclick = () => flip(+b.dataset.card, b)));
+  }
+  function flip(i, b) {
+    if (locked || b.classList.contains("matched") || open.includes(i)) return;
+    tone();
+    b.innerHTML = animalPicture(cards[i].s);
+    b.classList.add("revealed");
+    b.setAttribute("aria-pressed", "true");
+    b.setAttribute("aria-label", animalNames[cards[i].s]);
+    open.push(i);
+    if (open.length < 2) return;
+    moves++;
+    const [a, c] = open;
+    if (cards[a].id === cards[c].id) {
+      for (const n of open) {
+        const el = root.querySelector(`[data-card="${n}"]`);
+        el.classList.add("matched");
+        el.setAttribute("aria-disabled", "true");
+      }
+      open = [];
+      matched++;
+      tone("star");
+      if (matched === 6) {
+        state.progress.memory++;
+        save();
+        reward(8);
+        root.querySelector(".memory-status").textContent =
+          `Alle Paare gefunden in ${moves} Zügen! +8 Sterne`;
+        return;
+      }
+    } else {
+      locked = true;
+      timer = setTimeout(() => {
+        for (const n of open) {
+          const el = root.querySelector(`[data-card="${n}"]`);
+          if (el) {
+            el.textContent = "✧";
+            el.classList.remove("revealed");
+            el.setAttribute("aria-pressed", "false");
+            el.setAttribute("aria-label", `Verdeckte Karte ${n + 1}`);
+          }
+        }
+        open = [];
+        locked = false;
+      }, 900);
+    }
+    root.querySelector(".memory-status").textContent =
+      `${matched} von 6 Paaren · ${moves} Züge`;
+  }
+  start();
+  return () => clearTimeout(timer);
+}
+
+let state = loadLocal(),
+  cleanup = () => {},
+  toastTimer = 0,
+  storageWarning = false,
+  page = "world",
+  sleeping = false;
+const app = document.querySelector("#app"),
+  modal = document.querySelector("#modal"),
+  content = document.querySelector("#modal-content");
+const esc = (s) =>
+  String(s).replace(
+    /[&<>"']/g,
+    (c) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
+        c
+      ],
+  );
+function toast(message) {
+  const el = document.querySelector("#toast");
+  el.textContent = message;
+  el.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove("show"), 4000);
+}
+function save() {
+  if (!store(state) && !storageWarning) {
+    storageWarning = true;
+    toast(
+      "Automatisches Speichern ist hier nicht möglich. Sichere deinen Speichercode.",
+    );
+  }
+  document.querySelector("#balance").textContent = state.stars;
+  updateSound();
+}
+function reward(n) {
+  if (n <= 0) return;
+  state.stars = Math.min(100000000, state.stars + n);
+  save();
+  toast(`✦ ${n} Sterne gesammelt. Zauberhaft!`);
+  tone("star");
+}
+function updateSound() {
+  const b = document.querySelector("#sound");
+  b.innerHTML = `♫ <span>Ton ${state.sound ? "an" : "aus"}</span>`;
+  b.setAttribute("aria-pressed", String(state.sound));
+  b.setAttribute(
+    "aria-label",
+    state.sound ? "Ton ausschalten" : "Ton einschalten",
+  );
+}
+function openDialog(html, { closable = true } = {}) {
+  window.dispatchEvent(new Event("game-modal"));
+  content.innerHTML = `${closable ? '<button class="dialog-close" aria-label="Schließen">×</button>' : ""}${html}`;
+  if (!modal.open) modal.showModal();
+  content
+    .querySelector(".dialog-close")
+    ?.addEventListener("click", () => modal.close());
+}
+function confirmAction(title, text, yes, action) {
+  openDialog(
+    `<div class="dialog-star">◇</div><h2 id="dialog-title">${title}</h2><p>${text}</p><div class="dialog-actions"><button class="button secondary" id="cancel-action">Abbrechen</button><button class="button" id="confirm-action">${yes}</button></div>`,
+  );
+  content.querySelector("#cancel-action").onclick = () => modal.close();
+  content.querySelector("#confirm-action").onclick = () => {
+    modal.close();
+    action();
+  };
+}
+function heading(eyebrow, title, description, extra = "") {
+  return `<header class="page-heading"><div><p class="eyebrow">${eyebrow}</p><h1>${title}</h1><p>${description}</p></div>${extra}</header>`;
+}
+const tiles = [
+  [
+    "salon",
+    "✂",
+    "Beauty-Salon",
+    "Ein Look, so einzigartig wie du.",
+    "#f0e5ef",
+    "#b28aa9",
+  ],
+  [
+    "care",
+    "♡",
+    "Füttern & Pflegen",
+    "Kleine Momente, großes Glück.",
+    "#f7ebdd",
+    "#c4a070",
+  ],
+  [
+    "run",
+    "➜",
+    "Sternenpfad",
+    "Hüpfe in dein nächstes Abenteuer.",
+    "#e7edf3",
+    "#8fa5bb",
+  ],
+  [
+    "home",
+    "⌂",
+    "Dein Zuhause",
+    "Mach es dir zauberhaft gemütlich.",
+    "#eee7f3",
+    "#a18bb7",
+  ],
+  [
+    "games",
+    "✧",
+    "Kleine Minispiele",
+    "Eine ganze Welt zum Entdecken.",
+    "#e8efdf",
+    "#98aa81",
+  ],
+  [
+    "save",
+    "◇",
+    "Dein Spielstand",
+    "Bewahre deine Lieblingsmomente.",
+    "#f7eed8",
+    "#c2a25c",
+  ],
+];
+function tile(t) {
+  return `<a class="destination" href="#${t[0]}" style="--tint:${t[4]};--accent:${t[5]}"><span class="tile-icon" aria-hidden="true">${t[1]}</span><div><h3>${t[2]}</h3><p>${t[3]}</p></div><span class="arrow">→</span></a>`;
+}
+function animate(pose = "bounce", symbol = "♡") {
+  const pony = app.querySelector(
+    ".preview .pony,.world-pony .pony,.room-pony .pony",
+  );
+  if (!pony) return;
+  pony.classList.remove("bounce", "chew", "brush", "wash");
+  void pony.getBoundingClientRect();
+  pony.classList.add(pose);
+  const container = pony.parentElement;
+  const particles = document.createElement("div");
+  particles.className = "particles";
+  for (let i = 0; i < 5; i++) {
+    const p = document.createElement("span");
+    p.className = "particle";
+    p.textContent = symbol;
+    p.style.setProperty("--dx", `${(i - 2) * 35}px`);
+    p.style.animationDelay = i * 0.09 + "s";
+    particles.append(p);
+  }
+  container.append(particles);
+  setTimeout(() => {
+    particles.remove();
+    pony.classList.remove(pose);
+  }, 1800);
+}
+function world() {
+  app.innerHTML =
+    heading(
+      "EIN KLEINES BISSCHEN MAGIE",
+      "Schön, dass du da bist.",
+      `Deine Zauberwelt wartet auf dich und ${esc(state.name)}.`,
+      `<span class="pill">✧ Dein Abenteuer. Dein Tempo.</span>`,
+    ) +
+    `<section class="world-hero" aria-label="Deine Zauberwelt">${landscape()}<div class="world-copy"><span class="pill">DEIN MAGISCHER LIEBLINGSORT</span><h2>Hier ist jeder Tag<br>ein bisschen zauberhaft.</h2><p>Ein treuer Freund. Tausend Möglichkeiten.<br>Und ganz viel Platz für Fantasie.</p></div><button class="world-pony" style="background:none;border:0;padding:0" aria-label="${esc(state.name)} streicheln">${unicorn(state.look)}</button><span class="sparkle one">✦</span><span class="sparkle two">✧</span><span class="butterfly" aria-hidden="true">⋈</span><div class="world-sign"><div><strong>${esc(state.name)} freut sich auf dich.</strong><p>Was möchtet ihr heute zusammen machen?</p></div><a class="tiny-link" href="#care">Zeit für ein bisschen Pflege →</a></div></section><div class="section-heading"><h2>Wohin führt dich dein Zauber?</h2><span>Es gibt so viel zu entdecken.</span></div><section class="destinations" aria-label="Entdecke die Spielbereiche">${tiles.map(tile).join("")}</section><footer class="world-footer"><span>✧ Mit Liebe und einer Prise Sternenstaub</span><span>·</span><span>Ohne Werbung. Ohne Zeitdruck.</span></footer>`;
+  app.querySelector(".world-pony").onclick = () => {
+    animate();
+    tone("happy");
+    toast(`${state.name} freut sich über deine Berührung!`);
+  };
+}
+function preview(label = "Dein ganz eigener Zauber.") {
+  return `<div class="preview">${unicorn(state.look)}<div class="preview-label">${label}</div></div>`;
+}
+function refreshPony() {
+  const p = app.querySelector(".preview .pony");
+  if (p) p.outerHTML = unicorn(state.look);
+}
+function buy(item, price, after) {
+  if (state.owned.includes(item)) {
+    after();
+    return;
+  }
+  if (state.stars < price) {
+    toast(
+      `Dafür brauchst du noch ${price - state.stars} Sterne. Sammle sie in den Minispielen.`,
+    );
+    return;
+  }
+  confirmAction(
+    "Ein bisschen neuer Zauber",
+    `Möchtest du diesen Gegenstand für ${price} Sterne freischalten?`,
+    "Freischalten",
+    () => {
+      state.stars -= price;
+      state.owned.push(item);
+      after();
+      tone("happy");
+    },
+  );
+}
+function salon() {
+  app.innerHTML =
+    heading(
+      "DEIN STIL. DEINE MAGIE.",
+      "Willkommen im Salon.",
+      "Ein neuer Farbklecks, ein bisschen Glitzer – ganz wie es dir gefällt.",
+    ) +
+    `<div class="split"><section><div id="salon-preview">${preview()}</div><form class="name-edit" id="name-form"><label class="sr-only" for="name">Name deines Einhorns</label><input id="name" maxlength="24" value="${esc(state.name)}" autocomplete="off" required><button class="button" type="submit">Name ändern</button></form><p class="inline-notice" role="status" id="salon-notice">Deine Änderungen werden automatisch gespeichert.</p></section><section class="panel" aria-label="Einhorn gestalten">${[
+      ["coat", "Fellfarbe", palette],
+      ["mane", "Mähnenfarbe", hairColors],
+      ["tail", "Schweiffarbe", hairColors],
+    ]
+      .map(
+        ([key, label, colors]) =>
+          `<div class="control-group"><span class="control-label">${label}</span><div class="swatches">${colors.map((c, i) => `<button class="swatch" data-look="${key}" data-value="${c}" aria-label="${label}: ${c === "rainbow" ? "Regenbogen" : (key === "coat" ? ["Creme", "Rosa", "Lavendel", "Türkis", "Gold", "Salbei"] : ["Lavendel", "Rosa", "Türkis", "Gold", "Salbei", "Regenbogen"])[i]}" aria-pressed="${state.look[key] === c}" style="background:${c === "rainbow" ? "linear-gradient(135deg,#e8a0bb,#f0d390,#9ccdd1,#b49bd4)" : c}"></button>`).join("")}</div></div>`,
+      )
+      .join(
+        "",
+      )}<div class="control-group"><span class="control-label">Frisur</span><div class="row">${[
+      ["waves", "Zauberwellen", 0],
+      ["short", "Frecher Pony", 0],
+      ["braid", "Flechtzauber", 18],
+    ]
+      .map(
+        ([v, n, p]) =>
+          `<button class="chip" data-style="${v}" data-price="${p}" aria-pressed="${state.look.style === v}">${n}${!state.owned.includes(v) ? `<small>✦ ${p}</small>` : ""}</button>`,
+      )
+      .join(
+        "",
+      )}</div></div><div class="control-group"><span class="control-label">Das gewisse Funkeln</span><div class="row">${[
+      ["none", "Ganz natürlich", 0],
+      ["spots", "Pünktchen", 0],
+      ["sparkles", "Sternenglitzer", 15],
+    ]
+      .map(
+        ([v, n, p]) =>
+          `<button class="chip" data-pattern="${v}" data-price="${p}" aria-pressed="${state.look.pattern === v}">${n}${v === "sparkles" && !state.owned.includes(v) ? `<small>✦ ${p}</small>` : ""}</button>`,
+      )
+      .join(
+        "",
+      )}</div></div><div class="control-group"><span class="control-label">Dein Lieblingsaccessoire</span><div class="row">${Object.entries(
+      accessories,
+    )
+      .map(
+        ([v, a]) =>
+          `<button class="chip" data-accessory="${v}" aria-pressed="${state.look.accessory === v}">${a.name}${!state.owned.includes(v) ? `<small>✦ ${a.price}</small>` : ""}</button>`,
+      )
+      .join("")}</div></div></section></div>`;
+  const apply = (key, value) => {
+    state.look[key] = value;
+    save();
+    salon();
+    tone();
+  };
+  app.querySelectorAll("[data-look]").forEach(
+    (b) =>
+      (b.onclick = () => {
+        state.look[b.dataset.look] = b.dataset.value;
+        save();
+        refreshPony();
+        app
+          .querySelectorAll(`[data-look="${b.dataset.look}"]`)
+          .forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+        tone();
+      }),
+  );
+  app
+    .querySelectorAll("[data-style]")
+    .forEach(
+      (b) =>
+        (b.onclick = () =>
+          buy(b.dataset.style, +b.dataset.price, () =>
+            apply("style", b.dataset.style),
+          )),
+    );
+  app.querySelectorAll("[data-pattern]").forEach(
+    (b) =>
+      (b.onclick = () => {
+        if (b.dataset.pattern === "none") {
+          apply("pattern", "none");
+          return;
+        }
+        buy(b.dataset.pattern, +b.dataset.price, () =>
+          apply("pattern", b.dataset.pattern),
+        );
+      }),
+  );
+  app
+    .querySelectorAll("[data-accessory]")
+    .forEach(
+      (b) =>
+        (b.onclick = () =>
+          buy(b.dataset.accessory, accessories[b.dataset.accessory].price, () =>
+            apply("accessory", b.dataset.accessory),
+          )),
+    );
+  app.querySelector("#name-form").onsubmit = (e) => {
+    e.preventDefault();
+    const name = app.querySelector("#name").value.trim();
+    if (!name) {
+      toast("Wie soll dein Einhorn heißen?");
+      return;
+    }
+    state.name = name;
+    save();
+    app.querySelector("#salon-notice").textContent =
+      `Dein Einhorn heißt jetzt ${name}.`;
+    tone("happy");
+  };
+}
+function needs() {
+  return [
+    ["hunger", "Satt & zufrieden", "#e5c080"],
+    ["clean", "Sauber & weich", "#a3c7d0"],
+    ["love", "Geliebt & glücklich", "#dca9c3"],
+  ]
+    .map(
+      ([k, n, c]) =>
+        `<div class="need"><div class="row"><span>${n}</span><b id="${k}-value">${state.needs[k]} %</b></div><div class="track" role="progressbar" aria-label="${n}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${state.needs[k]}" id="${k}-track"><i id="${k}-bar" style="width:${state.needs[k]}%;background:${c}"></i></div></div>`,
+    )
+    .join("");
+}
+function care() {
+  app.innerHTML =
+    heading(
+      "LIEBE GEHT DURCH DEN MAGEN",
+      "Ein Moment für euch.",
+      "Ein knackiger Apfel, eine weiche Bürste und ganz viel Zuneigung.",
+    ) +
+    `<div class="care-stats">${needs()}</div><div class="split"><section>${preview("Zieh einen Leckerbissen zu deinem Einhorn.")}<p class="care-message" role="status" id="care-message">${esc(state.name)} freut sich auf ein bisschen gemeinsame Zeit.</p></section><section class="panel"><h2>Eine kleine Leckerei?</h2><p class="description">Ziehe das Futter zum Einhorn. Du kannst es auch antippen oder mit Enter auswählen.</p><div class="foods">${Object.entries(
+      {
+        apple: "Apfel",
+        carrot: "Möhre",
+        berry: "Erdbeere",
+        sugar: "Zuckerwürfel",
+        magic: "Zauberstern",
+      },
+    )
+      .map(
+        ([k, n]) =>
+          `<button class="food" data-food="${k}" aria-label="${n} füttern">${foodIcon(k)}${n}</button>`,
+      )
+      .join(
+        "",
+      )}</div><div class="control-group"><h2>Eine Extraportion Liebe</h2><p class="description">Pflege macht glücklich. Sterne verdienst du bei euren Abenteuern.</p><div class="care-tools"><button class="care-tool" data-care="brush"><span>≋</span>Bürsten</button><button class="care-tool" data-care="wash"><span>◌</span>Waschen</button><button class="care-tool" data-care="hug"><span>♡</span>Streicheln</button></div></div><div class="garden-note">Hier gibt es keine Eile. Dein Einhorn wartet immer auf dich – auch wenn du einmal länger nicht spielst.</div></section></div>`;
+  const update = () => {
+    for (const k of ["hunger", "clean", "love"]) {
+      app.querySelector(`#${k}-value`).textContent = state.needs[k] + " %";
+      app.querySelector(`#${k}-bar`).style.width = state.needs[k] + "%";
+      app
+        .querySelector(`#${k}-track`)
+        .setAttribute("aria-valuenow", state.needs[k]);
+    }
+  };
+  const feed = (kind) => {
+    const amount = { apple: 14, carrot: 12, berry: 10, sugar: 7, magic: 16 }[
+      kind
+    ];
+    const wasFull = state.needs.hunger === 100;
+    state.needs.hunger = Math.min(100, state.needs.hunger + amount);
+    state.needs.love = Math.min(100, state.needs.love + 3);
+    save();
+    update();
+    animate("chew", "✦");
+    tone("happy");
+    app.querySelector("#care-message").textContent = wasFull
+      ? "Schon satt – aber über deine Liebe freue ich mich immer."
+      : `${state.name} knabbert glücklich. Das schmeckt nach Zauberei!`;
+  };
+  const surface=app.querySelector('.preview');
+  let selectedTool=null, toolGesture=null, strokes=0;
+  const tool=document.createElement('div');tool.className='care-tool-cursor';tool.hidden=true;surface.append(tool);
+  const progress=document.createElement('p');progress.className='tool-progress';progress.setAttribute('role','status');surface.append(progress);
+  surface.tabIndex=0;surface.setAttribute('role','button');surface.setAttribute('aria-label','Einhorn streicheln');
+  function doCare(type){
+    const key=type==='hug'?'love':'clean';state.needs[key]=Math.min(100,state.needs[key]+15);
+    save();update();animate(type==='hug'?'bounce':type,type==='wash'?'◌':'♡');tone('happy');
+    app.querySelector('#care-message').textContent={brush:'So weich! Die Mähne glänzt wieder.',wash:'Plitsch, platsch! Wieder blitzsauber.',hug:`${state.name} kuschelt sich an dich. Wie schön!`}[type];
+  }
+  function positionTool(x,y){const r=surface.getBoundingClientRect();tool.style.left=(x-r.left)+'px';tool.style.top=(y-r.top)+'px';}
+  function selectTool(kind){    selectedTool=kind;strokes=0;tool.hidden=false;tool.innerHTML=careTool(kind);surface.classList.add('tool-active');
+    const r=surface.getBoundingClientRect();positionTool(r.left+r.width*.6,r.top+r.height*.5);
+    surface.setAttribute('aria-label',kind==='brush'?'Einhorn bürsten. Ziehen oder Enter drücken.':'Einhorn waschen. Ziehen oder Enter drücken.');
+    app.querySelectorAll('[data-care]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.care===kind)));
+    progress.textContent='Pflege: 0 %';app.querySelector('#care-message').textContent=kind==='brush'?'Bewege die Bürste über das Einhorn.':'Bewege den Schwamm über das Einhorn. Es darf schäumen!';
+  }
+  function contact(x,y){const r=surface.querySelector('.pony').getBoundingClientRect();return x>=r.left+r.width*.12&&x<=r.right-r.width*.12&&y>=r.top+r.height*.13&&y<=r.bottom-r.height*.1;}
+  function stroke(amount){strokes+=amount;progress.textContent=`Pflege: ${Math.min(100,Math.round(strokes))} %`;if(strokes>=100){strokes=0;doCare(selectedTool);progress.textContent='Wunderbar gepflegt! Noch eine Runde?';}}
+  function toolMove(e){if(!selectedTool)return;const r=surface.getBoundingClientRect();if(toolGesture||(e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom))positionTool(e.clientX,e.clientY);
+    if(!toolGesture||toolGesture.id!==e.pointerId)return;
+    if(contact(e.clientX,e.clientY)&&contact(toolGesture.x,toolGesture.y))stroke(Math.min(25,Math.hypot(e.clientX-toolGesture.x,e.clientY-toolGesture.y))*.35);
+    toolGesture.x=e.clientX;toolGesture.y=e.clientY;
+  }
+  function toolEnd(){toolGesture=null;}
+  app.querySelectorAll('[data-care]').forEach(b=>{
+    if(b.dataset.care==='hug'){b.onclick=()=>{selectedTool=null;tool.hidden=true;progress.textContent='';surface.classList.remove('tool-active');surface.setAttribute('aria-label','Einhorn streicheln');app.querySelectorAll('[data-care]').forEach(x=>x.setAttribute('aria-pressed','false'));doCare('hug');};return;}
+    b.innerHTML=careTool(b.dataset.care)+`<span>${b.dataset.care==='brush'?'Bürsten':'Waschen'}</span>`;
+    b.onpointerdown=e=>{if(e.button!==0)return;e.preventDefault();selectTool(b.dataset.care);toolGesture={id:e.pointerId,x:e.clientX,y:e.clientY};b.setPointerCapture(e.pointerId);};
+    b.onclick=e=>{if(e.detail===0)selectTool(b.dataset.care);};
+  });
+  surface.onpointerdown=e=>{if(!selectedTool||e.button!==0)return;e.preventDefault();toolGesture={id:e.pointerId,x:e.clientX,y:e.clientY};surface.setPointerCapture(e.pointerId);positionTool(e.clientX,e.clientY);};
+  surface.onclick=()=>{if(!selectedTool)doCare('hug');};
+  surface.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();if(selectedTool)stroke(35);else doCare('hug');}if(e.key==='Escape'){selectedTool=null;tool.hidden=true;progress.textContent='';surface.classList.remove('tool-active');}};
+  window.addEventListener('pointermove',toolMove);window.addEventListener('pointerup',toolEnd);window.addEventListener('pointercancel',toolEnd);
+  let drag = null,
+    ghost = null;
+  const cancel = () => {
+    ghost?.remove();
+    ghost = null;
+    app.querySelector(".preview")?.classList.remove("drop-ready");
+    app.querySelector(".dragging")?.classList.remove("dragging");
+    drag = null;
+  };
+  const move = (e) => {
+    if (!drag || e.pointerId !== drag.id) return;
+    const distance = Math.hypot(e.clientX - drag.x, e.clientY - drag.y);
+    if (distance > 8 && !ghost) {
+      ghost = document.createElement("div");
+      ghost.className = "food-ghost";
+      ghost.innerHTML = foodIcon(drag.kind);
+      document.body.append(ghost);
+      drag.button.classList.add("dragging");
+      app.querySelector(".preview").classList.add("drop-ready");
+    }
+    if (ghost) {
+      ghost.style.left = e.clientX + "px";
+      ghost.style.top = e.clientY + "px";
+    }
+  };
+  const up = (e) => {
+    if (!drag || drag.id !== e.pointerId) return;
+    const r = app.querySelector(".preview").getBoundingClientRect();
+    if (
+      !ghost ||
+      (e.clientX >= r.left &&
+        e.clientX <= r.right &&
+        e.clientY >= r.top &&
+        e.clientY <= r.bottom)
+    )
+      feed(drag.kind);
+    else
+      app.querySelector("#care-message").textContent =
+        "Fast geschafft! Zieh den Leckerbissen direkt zu deinem Einhorn.";
+    cancel();
+  };
+  app.querySelectorAll("[data-food]").forEach((b) => {
+    b.onpointerdown = (e) => {
+      if (e.button !== 0) return;
+      e.preventDefault();
+      cancel();
+      drag = {
+        kind: b.dataset.food,
+        id: e.pointerId,
+        x: e.clientX,
+        y: e.clientY,
+        button: b,
+      };
+      b.setPointerCapture(e.pointerId);
+    };
+    b.onclick = (e) => {
+      if (e.detail === 0) feed(b.dataset.food);
+    };
+  });
+  window.addEventListener("pointermove", move);
+  window.addEventListener("pointerup", up);
+  window.addEventListener("pointercancel", cancel);
+  cleanup = () => {
+    cancel();
+    tool.remove();
+    window.removeEventListener("pointermove",toolMove);window.removeEventListener("pointerup",toolEnd);window.removeEventListener("pointercancel",toolEnd);
+    window.removeEventListener("pointermove", move);
+    window.removeEventListener("pointerup", up);
+    window.removeEventListener("pointercancel", cancel);
+  };
+}
+function home() {
+  app.innerHTML =
+    heading(
+      "DEIN GEMÜTLICHER RÜCKZUGSORT",
+      "Zuhause ist es zauberhaft.",
+      "Kuscheln, träumen, neu gestalten. Hier ist Platz für deine Ideen.",
+    ) +
+    `<div class="split"><section><div class="room">${state.home.includes("rug") ? '<div class="furniture rug"></div>' : ""}<div class="bed"></div>${state.home.includes("plant") ? '<div class="furniture plant" aria-label="Zauberpflanze">♧</div>' : ""}${state.home.includes("lamp") ? '<div class="furniture lamp" aria-label="Sternenlampe">✦</div>' : ""}${state.home.includes("picture") ? '<div class="furniture picture" aria-label="Regenbogenbild">⌒</div>' : ""}<div class="room-pony">${unicorn(state.look, { sleep: sleeping })}</div></div><p class="care-message" id="sleep-message" role="status">${sleeping ? "Pssst … dein Einhorn träumt von Sternen." : "Ein weiches Bett und ein Lieblingsplatz. Willkommen zuhause."}</p></section><section class="panel"><h2>${sleeping ? "Süße Träume." : "Zeit für eine Kuschelpause?"}</h2><p class="description">Eine kleine Pause tut gut. Die Energie füllt sich im Schlaf wieder auf.</p><div class="need"><div class="row between"><span>Ausgeruht & munter</span><b id="rest-value">${state.needs.rest} %</b></div><div class="track"><i id="rest-bar" style="width:${state.needs.rest}%;background:#b9a2ce"></i></div></div><button class="button" id="sleep-toggle" style="margin-top:17px">${sleeping ? "☀ Sanft aufwecken" : "☾ Schlafen legen"}</button><div class="control-group"><h2>Mach es zu deinem Zuhause.</h2><p class="description">Gekaufte Lieblingsstücke bleiben für immer bei dir.</p><div class="shop">${Object.entries(
+      furniture,
+    )
+      .map(
+        ([k, f]) =>
+          `<button class="chip ${state.home.includes(k) ? "owned" : ""}" data-furniture="${k}" ${state.home.includes(k) ? "disabled" : ""}>${f.name}<small>${state.home.includes(k) ? "✓ Steht schon in deinem Zimmer" : `✦ ${f.price} Sterne`}</small></button>`,
+      )
+      .join("")}</div></div></section></div>`;
+  let timer;
+  if (sleeping) {
+    timer = setInterval(() => {
+      if (state.needs.rest < 100) {
+        state.needs.rest = Math.min(100, state.needs.rest + 4);
+        save();
+        app.querySelector("#rest-value").textContent = state.needs.rest + " %";
+        app.querySelector("#rest-bar").style.width = state.needs.rest + "%";
+      }
+    }, 1000);
+  }
+  app.querySelector("#sleep-toggle").onclick = () => {
+    clearInterval(timer);
+    sleeping = !sleeping;
+    tone(sleeping ? "sleep" : "happy");
+    home();
+  };
+  app.querySelectorAll("[data-furniture]").forEach(
+    (b) =>
+      (b.onclick = () => {
+        const k = b.dataset.furniture,
+          f = furniture[k];
+        if (state.stars < f.price) {
+          toast(`Für ${f.name} fehlen noch ${f.price - state.stars} Sterne.`);
+          return;
+        }
+        confirmAction(
+          "Ein neuer Lieblingsplatz",
+          `${f.name} kostet ${f.price} Sterne. Möchtest du es in dein Zuhause stellen?`,
+          "Einrichten",
+          () => {
+            if (state.home.includes(k)) return;
+            state.stars -= f.price;
+            state.home.push(k);
+            save();
+            clearInterval(timer);
+            home();
+            tone("happy");
+          },
+        );
+      }),
+  );
+  cleanup = () => clearInterval(timer);
+}
+function games() {
+  app.innerHTML =
+    heading(
+      "KLEINE SPIELE. GROSSE FREUDE.",
+      "Noch mehr Zaubermomente.",
+      "Entdecke neue Lieblingsspiele und sammle funkelnde Sterne.",
+    ) +
+    `<section class="destinations">${[
+      [
+        "flight",
+        "⋈",
+        "Wolkenflug",
+        "Schwebe durch den Sternenhimmel.",
+        "#e6eef5",
+        "#92a5bd",
+      ],
+      [
+        "memory",
+        "◇",
+        "Zauber-Memory",
+        "Finde sechs magische Paare.",
+        "#f0e5ef",
+        "#b28aa9",
+      ],
+      [
+        "garden",
+        "❀",
+        "Zaubergarten",
+        "Lass deine kleine Blumenwelt wachsen.",
+        "#e8efdf",
+        "#98aa81",
+      ],
+    ]
+      .map(tile)
+      .join(
+        "",
+      )}</section><div class="panel" style="margin-top:24px"><h2>Jeder kleine Erfolg zählt.</h2><p class="muted">Ein vollständiges Memory bringt 8 Sterne. Im Wolkenflug sammelst du Sterne unterwegs. Im Garten braucht jede Blume etwas Zeit und Zuwendung.</p><div class="row"><span class="pill">${state.progress.memory} Memorys gelöst</span><span class="pill">${state.progress.harvests} Blumen geerntet</span><span class="pill">${state.progress.flight} Fluglevel geschafft</span></div></div>`;
+}
+function garden() {
+  app.innerHTML =
+    heading(
+      "MIT LIEBE WÄCHST ALLES",
+      "Dein kleiner Zaubergarten.",
+      "Pflanzen, gießen, staunen. Eine Blume nach der anderen.",
+    ) +
+    `<div class="panel"><div class="row between"><h2>Drei kleine Beete voller Möglichkeiten.</h2><span class="pill">Ernte: ✦ 4 pro Blume</span></div><div class="garden" id="plots"></div><div class="garden-note">Das erste Saatgut ist ein Geschenk. Jede weitere Pflanzung kostet 2 Sterne. Gieße deine Blume einmal und lass sie 20 Sekunden wachsen. Du kannst in dieser Zeit die Zauberwelt erkunden.</div></div>`;
+  const names = {
+    rose: "Zauberrose",
+    daisy: "Sternenblume",
+    lavender: "Mondlavendel",
+  };
+  function draw() {
+    const plots = app.querySelector("#plots");
+    if (!plots) return;
+    plots.innerHTML = state.garden
+      .map((p, i) => {
+        if (!p)
+          return `<section class="plot"><div class="empty-plot">♧</div><h3>Ein freies Beet</h3><label class="sr-only" for="seed-${i}">Blume für Beet ${i + 1}</label><select class="seed-select" id="seed-${i}">${Object.entries(
+            names,
+          )
+            .map(([k, n]) => `<option value="${k}">${n}</option>`)
+            .join(
+              "",
+            )}</select><button class="button secondary" data-plant="${i}">Pflanzen ${state.progress.harvests === 0 ? "· gratis" : "· ✦ 2"}</button></section>`;
+        const seconds = Math.max(0, Math.ceil((p.readyAt - Date.now()) / 1000)),
+          ready = p.stage === 2;
+        return `<section class="plot">${flower(p.kind, p.stage)}<h3>${names[p.kind]}</h3><p data-growth="${i}">${p.stage === 0 ? "Ein Schluck Wasser fehlt." : ready ? "Bereit zum Ernten!" : `Wächst noch ${seconds} Sekunden.`}</p><button class="button ${ready ? "" : "secondary"}" data-tend="${i}" ${p.stage === 1 ? "disabled" : ""}>${p.stage === 0 ? "Gießen" : ready ? "Ernten · ✦ 4" : "Wächst …"}</button></section>`;
+      })
+      .join("");
+    plots.querySelectorAll("[data-plant]").forEach(
+      (b) =>
+        (b.onclick = () => {
+          const i = +b.dataset.plant,
+            cost = state.progress.harvests === 0 ? 0 : 2;
+          if (state.stars < cost) {
+            toast(
+              "Für neues Saatgut brauchst du 2 Sterne. Im Memory kannst du welche sammeln.",
+            );
+            return;
+          }
+          state.stars -= cost;
+          state.garden[i] = {
+            kind: plots.querySelector(`#seed-${i}`).value,
+            stage: 0,
+            readyAt: 0,
+          };
+          save();
+          draw();
+          tone();
+        }),
+    );
+    plots.querySelectorAll("[data-tend]").forEach(
+      (b) =>
+        (b.onclick = () => {
+          const i = +b.dataset.tend,
+            p = state.garden[i];
+          if (p.stage === 0) {
+            p.stage = 1;
+            p.readyAt = Date.now() + 20000;
+            save();
+            tone("happy");
+          } else if (p.stage === 2) {
+            state.garden[i] = null;
+            state.progress.harvests++;
+            reward(4);
+          }
+          draw();
+        }),
+    );
+  }
+  function tick() {
+    let changed = false;
+    for (const p of state.garden) {
+      if (p?.stage === 1 && Date.now() >= p.readyAt) {
+        p.stage = 2;
+        changed = true;
+      }
+    }
+    if (changed) {
+      save();
+      draw();
+    } else if (!app.querySelector("#plots").children.length) draw();
+    else
+      state.garden.forEach((p, i) => {
+        if (p?.stage === 1) {
+          const label = app.querySelector(`[data-growth="${i}"]`);
+          if (label)
+            label.textContent = `Wächst noch ${Math.max(0, Math.ceil((p.readyAt - Date.now()) / 1000))} Sekunden.`;
+        }
+      });
+  }
+  tick();
+  const timer = setInterval(tick, 1000);
+  cleanup = () => clearInterval(timer);
+}
+function saveDialog(tab = "save") {
+  openDialog(
+    `<h2 id="dialog-title">Dein Stückchen Zauber.</h2><p>Bewahre deine Welt auf und nimm sie auf ein anderes Gerät mit.</p><div class="save-tabs"><button class="chip" id="tab-save" aria-pressed="${tab === "save"}">Spielstand speichern</button><button class="chip" id="tab-load" aria-pressed="${tab === "load"}">Spielstand laden</button></div>${tab === "save" ? `<label class="control-label" for="save-code">Dein persönlicher Speichercode</label><textarea id="save-code" readonly spellcheck="false">${encode(state)}</textarea><div class="dialog-actions"><button class="button" id="copy-code">Code kopieren</button><button class="button secondary" id="download-code">Als Datei sichern</button></div><p class="dialog-note">Bewahre den Code außerhalb dieses Browsers auf. Er enthält deinen jetzigen Spielstand – auch nach dem Löschen der Browserdaten kannst du ihn laden. Nach neuen Fortschritten brauchst du einen neuen Code.</p>` : `<label class="control-label" for="load-code">Füge deinen Speichercode ein</label><textarea id="load-code" placeholder="EZ1.…" spellcheck="false" autocapitalize="off"></textarea><p class="dialog-error" id="code-error" role="alert"></p><button class="button" id="load-code-button">Spielstand wiederherstellen</button><p class="dialog-note">Dein bisheriger Spielstand wird erst nach deiner Bestätigung ersetzt.</p>`}<p class="dialog-note">Automatisch gespeichert wird zusätzlich auf diesem Gerät.</p><button class="tiny-link" id="new-game" style="margin-top:8px">Ein neues Abenteuer beginnen</button>`,
+  );
+  content.querySelector("#tab-save").onclick = () => saveDialog("save");
+  content.querySelector("#tab-load").onclick = () => saveDialog("load");
+  content.querySelector("#new-game").onclick = () =>
+    confirmAction(
+      "Ein neues Abenteuer?",
+      "Dein bisheriger Spielstand wird ersetzt. Sichere vorher deinen Speichercode, wenn du ihn behalten möchtest.",
+      "Neues Spiel",
+      () => newGame(),
+    );
+  if (tab === "save") {
+    content.querySelector("#copy-code").onclick = async () => {
+      try {
+        await navigator.clipboard.writeText(
+          content.querySelector("#save-code").value,
+        );
+        toast("Dein Speichercode wurde kopiert. Bewahre ihn gut auf.");
+      } catch {
+        const t = content.querySelector("#save-code");
+        t.focus();
+        t.select();
+        toast(
+          "Bitte kopiere den markierten Code über das Kopiermenü deines Geräts.",
+        );
+      }
+    };
+    content.querySelector("#download-code").onclick = () => {
+      const blob = new Blob([encode(state)], {
+          type: "text/plain;charset=utf-8",
+        }),
+        url = URL.createObjectURL(blob),
+        a = document.createElement("a");
+      a.href = url;
+      a.download = "einhorn-zauberwelt-spielstand.txt";
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    };
+  } else
+    content.querySelector("#load-code-button").onclick = () => {
+      try {
+        const incoming = decode(content.querySelector("#load-code").value);
+        confirmAction(
+          "Diese Zauberwelt laden?",
+          `Du lädst den Spielstand von ${esc(incoming.name)} mit ${incoming.stars} Sternen. Dein aktueller Spielstand wird ersetzt.`,
+          "Spielstand laden",
+          () => {
+            cleanup();
+            cleanup = () => {};
+            state = incoming;
+            state.started = true;
+            sleeping = false;
+            setAudio(state.sound);
+            save();
+            go("world");
+            toast("Willkommen zurück! Deine Zauberwelt ist wieder da.");
+          },
+        );
+      } catch (e) {
+        content.querySelector("#code-error").textContent = e.message;
+        tone("error");
+      }
+    };
+}
+function newGame() {
+  openDialog(
+    `<div class="dialog-star">✧</div><h2 id="dialog-title">Ein neuer Freund für dich.</h2><p>Wie soll dein Einhorn heißen? Du kannst den Namen später im Salon ändern.</p><form id="create-game"><label class="sr-only" for="first-name">Name deines Einhorns</label><input id="first-name" maxlength="24" placeholder="Zum Beispiel Sternchen" value="Sternchen" required autocomplete="off"><div class="dialog-actions"><button class="button" type="submit">Ab in die Zauberwelt →</button><button class="button secondary" id="cancel-new" type="button">Zurück</button></div></form>`,
+  );
+  content.querySelector("#cancel-new").onclick = () => welcome();
+  content.querySelector("#create-game").onsubmit = (e) => {
+    e.preventDefault();
+    const name = content.querySelector("#first-name").value.trim();
+    if (!name) {
+      content
+        .querySelector("#first-name")
+        .setCustomValidity("Gib deinem Einhorn einen Namen.");
+      content.querySelector("#first-name").reportValidity();
+      return;
+    }
+    cleanup();
+    cleanup = () => {};
+    state = fresh();
+    state.name = name;
+    state.started = true;
+    sleeping = false;
+    setAudio(false);
+    save();
+    modal.close();
+    go("world");
+    toast(`Willkommen in deiner Zauberwelt, ${name}!`);
+  };
+  content.querySelector("#first-name").oninput = (e) =>
+    e.target.setCustomValidity("");
+}
+function welcome() {
+  openDialog(
+    `<div class="eyebrow">EIN FREUND. EINE WELT VOLLER MAGIE.</div><div class="welcome-pony">${unicorn(state.look)}</div><h2 id="dialog-title">Deine Einhorn-Zauberwelt.</h2><p>Gestalte dein Einhorn, entdecke kleine Abenteuer und mach die Welt ein bisschen bunter.</p><div class="dialog-actions">${state.started ? '<button class="button" id="continue-game">Weiterspielen</button>' : ""}<button class="button ${state.started ? "secondary" : ""}" id="welcome-new">Neues Spiel</button><button class="button secondary" id="welcome-load">Spielstand laden</button></div><p class="dialog-note">Ohne Anmeldung. Ohne Werbung. Mit ganz viel Fantasie.</p>`,
+    { closable: state.started },
+  );
+  content
+    .querySelector("#continue-game")
+    ?.addEventListener("click", () => modal.close());
+  content.querySelector("#welcome-new").onclick = () => {
+    if (state.started)
+      confirmAction(
+        "Neu anfangen?",
+        "Sichere vorher deinen Speichercode. Dein bisheriger Fortschritt wird beim Start ersetzt.",
+        "Weiter",
+        newGame,
+      );
+    else newGame();
+  };
+  content.querySelector("#welcome-load").onclick = () => saveDialog("load");
+}
+function render() {
+  cleanup();
+  cleanup = () => {};
+  page = location.hash.slice(1) || "world";
+  if (page === "save") {
+    saveDialog();
+    page = "world";
+    history.replaceState(null, "", "#world");
+  }
+  document.querySelectorAll("#navigation a").forEach((a) => {
+    a.classList.toggle(
+      "active",
+      a.dataset.page === page ||
+        (a.dataset.page === "games" &&
+          ["flight", "memory", "garden"].includes(page)),
+    );
+    if (a.classList.contains("active")) a.setAttribute("aria-current", "page");
+    else a.removeAttribute("aria-current");
+  });
+  const renders = {
+    world,
+    salon,
+    care,
+    home,
+    games,
+    garden,
+    run: () => {
+      app.innerHTML =
+        heading(
+          "HÜPFEN. STAUNEN. STERNE SAMMELN.",
+          "Ein Pfad voller Abenteuer.",
+          "Dein Einhorn nimmt seinen ganz eigenen Zauber mit.",
+        ) + '<div id="runner"></div>';
+      cleanup = mountRunner(app.querySelector("#runner"), {
+        state,
+        save,
+        reward,
+      });
+    },
+    flight: () => {
+      app.innerHTML =
+        '<a class="back-link" href="#games">← Alle Minispiele</a>' +
+        heading(
+          "DEM HIMMEL EIN STÜCKCHEN NÄHER",
+          "Über den Wolken.",
+          "Ein sanfter Flug durch deine Fantasiewelt.",
+        ) +
+        '<div id="runner"></div>';
+      cleanup = mountRunner(app.querySelector("#runner"), {
+        state,
+        save,
+        reward,
+        flight: true,
+      });
+    },
+    memory: () => {
+      app.innerHTML =
+        '<a class="back-link" href="#games">← Alle Minispiele</a>' +
+        heading(
+          "EIN PAAR MAGISCHE MOMENTE",
+          "Was gehört zusammen?",
+          "Lass dir Zeit. Hinter jeder Karte wartet ein kleiner Zauber.",
+        ) +
+        '<div id="memory"></div>';
+      cleanup = mountMemory(app.querySelector("#memory"), {
+        state,
+        save,
+        reward,
+      });
+    },
+  };
+  (renders[page] || world)();
+  window.scrollTo({ top: 0, behavior: "instant" });
+}
+function go(to) {
+  if (location.hash === "#" + to) render();
+  else location.hash = to;
+}
+window.addEventListener("hashchange", render);
+document.querySelector("#save-menu").onclick = () => saveDialog();
+document.querySelector("#sound").onclick = () => {
+  state.sound = !state.sound;
+  if (!setAudio(state.sound)) {
+    state.sound = false;
+    toast("Ton ist in diesem Browser gerade nicht verfügbar.");
+  }
+  save();
+  if (state.sound) tone("happy");
+};
+// AudioContext is activated only by a real user gesture, including after restoration.
+document.addEventListener(
+  "pointerdown",
+  () => {
+    if (state.sound) setAudio(true);
+  },
+  { passive: true },
+);
+modal.addEventListener("cancel", (e) => {
+  if (!state.started) e.preventDefault();
+});
+window.addEventListener("pagehide", () => save());
+setInterval(() => {
+  if (state.sound && !document.hidden) ambience(performance.now());
+}, 1000);
+save();
+render();
+welcome();
+
 })();
 </script>
-</body></html>
+  </body>
+</html>
