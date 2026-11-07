@@ -1,0 +1,72 @@
+EINHORN-ZAUBERWELT – DIE NEUE VOLLWELT
+
+SO PROBIERST DU ES AUS
+1. Die ZIP-Datei vollständig entpacken.
+2. Im entpackten Ordner index.html öffnen.
+3. Alle Unterordner zusammenlassen. Das Spiel benötigt die Bilder aus assets.
+
+SO KOMMT ES AUF DEINE BESTEHENDE GITHUB-SEITE
+Die ZIP-Datei selbst ist kein veröffentlichbares Spiel. Hochgeladen werden die
+Dateien und Ordner DARIN:
+
+  index.html
+  style.css
+  js/      (ganzer Ordner)
+  assets/  (ganzer Ordner)
+  .nojekyll
+
+Diese gehören im Repository Einhorn auf dieselbe Ebene wie die bisherige
+index.html. Keinen zusätzlichen Einhorn-GitHub-Ordner dazwischen legen.
+Die bisherige index.html und ihre neuen zugehörigen Dateien werden ersetzt.
+
+Da viele Bilddateien dazugehören, ist GitHub Desktop für den gesamten Ordner
+am bequemsten: Repository öffnen, den entpackten Inhalt in dessen lokalen
+Ordner kopieren, Änderungen committen und mit Push origin hochladen.
+Auf der GitHub-Webseite können große Ordner mehrere Upload-Durchgänge benötigen.
+
+Wenn GitHub Pages wie bisher den main-Zweig und den Hauptordner verwendet,
+kann diese Veröffentlichungseinstellung bleiben. Danach veröffentlicht GitHub
+die aktualisierte Seite unter deiner bisherigen Adresse:
+https://tuebone.github.io/Einhorn/
+
+WAS ENTHALTEN IST
+- Eine begehbare Vollbildwelt für Desktop, Smartphone- und Tablet-Ansichten.
+- Sechs eigenständige illustrierte Ponys mit je 21 Animationssequenzen.
+- Fünf weitere Ponys nach 1, 3, 6, 7 und 15 Stunden aktiver Spielzeit.
+- Zehn Abenteuer-Level mit drei Bahnen, Springen, Ducken, Löchern und Hindernissen.
+- Fünf Wolkenflug-Level mit verschiedenen bewegten Landschaften.
+- Memory mit 20 bis 80 Karten und einem fairen Computergegner in drei Stufen.
+- Drei Gartenbeete, zehn Pflanzen und Wachstumszeiten bis 15 Minuten.
+- 30 Haufen beim Aufräumen: 10 mit 1,0 s, 10 mit 0,9 s, 10 mit 0,8 s.
+- Ballholen sowie zehn speicherbare Ausmalbilder mit 62 bis 73 Farbfeldern.
+- 20 illustrierte Einrichtungsgegenstände; gekaufte Dinge lassen sich ausblenden.
+- Salon mit mindestens zehn Sekunden Pflege und Abdeckung der Körperbereiche.
+  Nach 100 Prozent bleibt die Pflege fertig, bis eine neue Runde gestartet wird.
+- Fünf Frisuren, zusätzliche Farben, Accessoires, besondere kaufbare Farben und Futter.
+
+SPIELSTAND
+Der Browser speichert automatisch. Über Menü > Spielstand kannst du einen Code
+sichern, als Datei herunterladen oder einen früheren Stand laden. Alte EZ1-Codes
+werden übernommen. Bei derselben GitHub-Adresse wird der bisherige Browserstand
+nach Möglichkeit automatisch übernommen. Die alte gespeicherte Version wird nicht
+überschrieben; das neue Spiel verwendet einen eigenen Speicherschlüssel.
+Die bisherige Version hatte noch keinen Spielzeitzähler. Die Freischalt-Spielzeit
+beginnt deshalb mit der neuen Version. Sterne und bisheriger Fortschritt werden
+bei gültigen alten Spielständen übernommen.
+Die lokale Kopie und die GitHub-Webseite haben getrennte Browser-Speicherorte.
+Zum Wechseln zwischen Geräten oder zwischen lokal und online den Code verwenden.
+Pflanzen wachsen auch bei geschlossenem Spiel weiter. Pony-Freischaltungen zählen
+aktive Spielzeit bei sichtbarem Spiel, nicht die Zeit bei geschlossenem Tab.
+
+PRÜFUNG
+Die Logik- und Browserprüfungen sind bestanden. Geprüft wurden unter anderem:
+Speichercodes, alte Spielstände, Freischaltschwellen, Käufe, Pflanzen/Ernte,
+Pflegeabdeckung mit zehn Sekunden realem Streichen und bleibenden 100 Prozent,
+80-Karten-Memory mit Computer, alle 30 Haufen und deren Reaktionszeiten,
+Springen über Löcher, Ducken unter Ästen, Schaden, Pause, Level-Freischaltung,
+Flugsteuerung, Ausmalen mit Rückgängig-Funktion und Ballholen samt Rückgabe.
+Getestete Browsergrößen: 1440×900, 390×844, 768×1024 und 844×390.
+Das sind simulierte Ansichten in Chromium, keine physischen Gerätetests.
+
+Dieses Paket ist statisch: Für GitHub Pages sind keine Installation und kein
+Build-Schritt nötig. Es wurde noch nicht in dein GitHub-Repository hochgeladen.
