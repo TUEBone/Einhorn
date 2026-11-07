@@ -1,72 +1,47 @@
-EINHORN-ZAUBERWELT – DIE NEUE VOLLWELT
+EINHORN-ZAUBERWELT – NEUES GITHUB-KOMPAKTPAKET
 
-SO PROBIERST DU ES AUS
-1. Die ZIP-Datei vollständig entpacken.
-2. Im entpackten Ordner index.html öffnen.
-3. Alle Unterordner zusammenlassen. Das Spiel benötigt die Bilder aus assets.
+Dieses Paket enthält das vollständige Spiel in weniger als 100 Dateien.
+Die Bilddaten sind unverändert und werden nun aus größeren Bildpaketen geladen.
 
-SO KOMMT ES AUF DEINE BESTEHENDE GITHUB-SEITE
-Die ZIP-Datei selbst ist kein veröffentlichbares Spiel. Hochgeladen werden die
-Dateien und Ordner DARIN:
+1. Beide NEUEN Dateien Einhorn-Kompakt-Teil-1.zip und Einhorn-Kompakt-Teil-2.zip
+   von der Downloadseite herunterladen.
+2. Auf dem Laptop einen neuen leeren Ordner anlegen, z. B. Einhorn-neu.
+3. Beide ZIPs in genau diesen Ordner entpacken und die Ordner zusammenführen.
+   Danach liegen index.html, style.css, js und assets direkt in Einhorn-neu.
+4. Zum Ausprobieren index.html öffnen.
 
-  index.html
-  style.css
-  js/      (ganzer Ordner)
-  assets/  (ganzer Ordner)
-  .nojekyll
+AUF DER GITHUB-WEBSEITE HOCHLADEN
+1. Dein Repository tuebone/Einhorn öffnen.
+2. Add file > Upload files wählen.
+3. Den INHALT von Einhorn-neu gleichzeitig in das Uploadfenster ziehen:
+   index.html, style.css, den gesamten Ordner js und den gesamten Ordner assets
+   sowie die beiliegenden Textdateien und .nojekyll.
+   Es sind insgesamt weniger als 100 Dateien, einschließlich aller Unterordner.
+4. Mit Commit changes bestätigen.
 
-Diese gehören im Repository Einhorn auf dieselbe Ebene wie die bisherige
-index.html. Keinen zusätzlichen Einhorn-GitHub-Ordner dazwischen legen.
-Die bisherige index.html und ihre neuen zugehörigen Dateien werden ersetzt.
+Es werden die entpackten Dateien hochgeladen, nicht die ZIPs selbst.
+index.html muss im Repository wieder direkt auf der obersten Ebene liegen.
+Die Ordner js und assets bleiben vollständig erhalten; sie müssen nicht einzeln
+aufgemacht oder in vielen Durchgängen hochgeladen werden.
 
-Da viele Bilddateien dazugehören, ist GitHub Desktop für den gesamten Ordner
-am bequemsten: Repository öffnen, den entpackten Inhalt in dessen lokalen
-Ordner kopieren, Änderungen committen und mit Push origin hochladen.
-Auf der GitHub-Webseite können große Ordner mehrere Upload-Durchgänge benötigen.
-
-Wenn GitHub Pages wie bisher den main-Zweig und den Hauptordner verwendet,
-kann diese Veröffentlichungseinstellung bleiben. Danach veröffentlicht GitHub
-die aktualisierte Seite unter deiner bisherigen Adresse:
-https://tuebone.github.io/Einhorn/
-
-WAS ENTHALTEN IST
-- Eine begehbare Vollbildwelt für Desktop, Smartphone- und Tablet-Ansichten.
-- Sechs eigenständige illustrierte Ponys mit je 21 Animationssequenzen.
-- Fünf weitere Ponys nach 1, 3, 6, 7 und 15 Stunden aktiver Spielzeit.
-- Zehn Abenteuer-Level mit drei Bahnen, Springen, Ducken, Löchern und Hindernissen.
-- Fünf Wolkenflug-Level mit verschiedenen bewegten Landschaften.
-- Memory mit 20 bis 80 Karten und einem fairen Computergegner in drei Stufen.
-- Drei Gartenbeete, zehn Pflanzen und Wachstumszeiten bis 15 Minuten.
-- 30 Haufen beim Aufräumen: 10 mit 1,0 s, 10 mit 0,9 s, 10 mit 0,8 s.
-- Ballholen sowie zehn speicherbare Ausmalbilder mit 62 bis 73 Farbfeldern.
-- 20 illustrierte Einrichtungsgegenstände; gekaufte Dinge lassen sich ausblenden.
-- Salon mit mindestens zehn Sekunden Pflege und Abdeckung der Körperbereiche.
-  Nach 100 Prozent bleibt die Pflege fertig, bis eine neue Runde gestartet wird.
-- Fünf Frisuren, zusätzliche Farben, Accessoires, besondere kaufbare Farben und Futter.
+Die Dateien aus dem bisherigen großen Paket nicht in diesen neuen lokalen
+Ordner mischen. Auf GitHub eventuell schon vorhandene alte Bilddateien stören
+den neuen Start nicht; das neue Spiel verwendet die gebündelten Bildpakete.
 
 SPIELSTAND
-Der Browser speichert automatisch. Über Menü > Spielstand kannst du einen Code
-sichern, als Datei herunterladen oder einen früheren Stand laden. Alte EZ1-Codes
-werden übernommen. Bei derselben GitHub-Adresse wird der bisherige Browserstand
-nach Möglichkeit automatisch übernommen. Die alte gespeicherte Version wird nicht
-überschrieben; das neue Spiel verwendet einen eigenen Speicherschlüssel.
-Die bisherige Version hatte noch keinen Spielzeitzähler. Die Freischalt-Spielzeit
-beginnt deshalb mit der neuen Version. Sterne und bisheriger Fortschritt werden
-bei gültigen alten Spielständen übernommen.
-Die lokale Kopie und die GitHub-Webseite haben getrennte Browser-Speicherorte.
-Zum Wechseln zwischen Geräten oder zwischen lokal und online den Code verwenden.
-Pflanzen wachsen auch bei geschlossenem Spiel weiter. Pony-Freischaltungen zählen
-aktive Spielzeit bei sichtbarem Spiel, nicht die Zeit bei geschlossenem Tab.
+Der Speicherschlüssel und die Spielregeln bleiben gleich. Bei derselben
+Webadresse bleibt dein gültiger neuer Spielstand erhalten. Alte EZ1-Codes
+können weiterhin über Menü > Spielstand geladen werden.
+
+BILDER
+Die gesamten Bilder und Animationen stecken nun in assets/packs/*.js.
+Diese Dateien gehören zum Spiel und müssen vollständig mit hochgeladen werden.
+Sie enthalten dieselben Bilddaten wie das vorherige Paket und werden nach Bedarf
+nachgeladen. Es wurde keine Figur und keine Animationssequenz entfernt.
 
 PRÜFUNG
-Die Logik- und Browserprüfungen sind bestanden. Geprüft wurden unter anderem:
-Speichercodes, alte Spielstände, Freischaltschwellen, Käufe, Pflanzen/Ernte,
-Pflegeabdeckung mit zehn Sekunden realem Streichen und bleibenden 100 Prozent,
-80-Karten-Memory mit Computer, alle 30 Haufen und deren Reaktionszeiten,
-Springen über Löcher, Ducken unter Ästen, Schaden, Pause, Level-Freischaltung,
-Flugsteuerung, Ausmalen mit Rückgängig-Funktion und Ballholen samt Rückgabe.
-Getestete Browsergrößen: 1440×900, 390×844, 768×1024 und 844×390.
-Das sind simulierte Ansichten in Chromium, keine physischen Gerätetests.
-
-Dieses Paket ist statisch: Für GitHub Pages sind keine Installation und kein
-Build-Schritt nötig. Es wurde noch nicht in dein GitHub-Repository hochgeladen.
+Die Spiellogik-Prüfungen sind bestanden. Alle 590 Bilder und Farbebenen wurden
+nach dem Bündeln per Prüfsumme mit den vorherigen Dateien verglichen und sind
+bytegenau gleich. Das Nachladen, die Bildzuweisung und Raumwechsel während des
+Ladens wurden automatisiert geprüft. Die neue Dateibündelung wurde nicht erneut
+auf einem physischen Smartphone oder Tablet getestet.

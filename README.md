@@ -1,6 +1,4 @@
-# Einhorn-Zauberwelt
+# Einhorn-Zauberwelt – GitHub-Kompaktpaket
 
-Vollbildwelt mit sechs illustrierten Ponys und den neuen Spielbereichen.
-
-`index.html` öffnen oder den gesamten Paketinhalt auf GitHub Pages veröffentlichen.
-Die Anleitung steht in **LIESMICH-GITHUB.txt**. Keine Installation, kein Build nötig.
+Das vollständige Spiel mit gebündelten, unveränderten Bilddaten.
+Die Upload-Anleitung steht in LIESMICH-GITHUB.txt.

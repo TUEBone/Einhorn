@@ -1,7 +1,7 @@
 (function(E){
  const images=new Map(),tinted=new Map();
  const A=E.art={};
- A.image=function(src){let img=images.get(src);if(img){images.delete(src);images.set(src,img);}if(!img){img=new Image();img.src=src;images.set(src,img);if(images.size>72)images.delete(images.keys().next().value);}return img;};
+ A.image=function(src){let img=images.get(src);if(img){images.delete(src);images.set(src,img);}if(!img){img=new Image();E.assignAsset(img,src);images.set(src,img);if(images.size>72)images.delete(images.keys().next().value);}return img;};
  A.svg=function(body){return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><defs><linearGradient id="wood" x2=".7" y2="1"><stop stop-color="#c99163"/><stop offset="1" stop-color="#77503e"/></linearGradient><linearGradient id="purple" x2=".7" y2="1"><stop stop-color="#d4b5e8"/><stop offset="1" stop-color="#8b6fa9"/></linearGradient><linearGradient id="pink" x2=".7" y2="1"><stop stop-color="#f5c0cf"/><stop offset="1" stop-color="#d68ea9"/></linearGradient><linearGradient id="gold" x2=".8" y2="1"><stop stop-color="#fff0b4"/><stop offset="1" stop-color="#c29850"/></linearGradient><linearGradient id="green" x2=".8" y2="1"><stop stop-color="#b5db9e"/><stop offset="1" stop-color="#53846b"/></linearGradient></defs><g stroke="#80677f" stroke-width="2" stroke-linejoin="round">'+body+'</g></svg>');};
  const path=(d,fill,extra='')=>`<path d="${d}" fill="${fill}" ${extra}/>`;
  const rect=(x,y,w,h,fill,r=5,extra='')=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${fill}" ${extra}/>`;
